@@ -1,0 +1,25 @@
+- model: store.productunit
+  pk: 1
+  fields:
+    short_name: 'kg'
+    name: 'kilograms' 
+- model: store.productunit
+  pk: 2
+  fields:
+    short_name: 'g'
+    name: 'grams' 
+- model: store.productunit
+  pk: 3
+  fields:
+    short_name: 'cl'
+    name: 'centiliters' 
+- model: store.productunit
+  pk: 4
+  fields:
+    short_name: 'l'
+    name: 'liters' 
+- model: store.productunit
+  pk: 5
+  fields:
+    short_name: 'ks'
+    name: 'kus' 

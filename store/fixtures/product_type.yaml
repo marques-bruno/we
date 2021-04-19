@@ -1,0 +1,30 @@
+- model: store.producttype
+  pk: 1
+  fields:
+    ref_name: 'meat'
+    name: 'Meat' 
+    icon: 'fa-meat' 
+- model: store.producttype
+  pk: 2
+  fields:
+    ref_name: 'dairy'
+    name: 'Dairy Products' 
+    icon: 'fa-cow' 
+- model: store.producttype
+  pk: 3
+  fields:
+    ref_name: 'veggies'
+    name: 'Vegetables' 
+    icon: 'fa-carrot'
+- model: store.producttype
+  pk: 4
+  fields:
+    ref_name: 'fruits'
+    name: 'Fruits' 
+    icon: 'fa-apple-alt' 
+- model: store.producttype
+  pk: 5
+  fields:
+    ref_name: 'baskets'
+    name: 'Baskets' 
+    icon: 'fa-shopping-basket' 

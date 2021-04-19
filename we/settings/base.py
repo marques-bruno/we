@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
+    'wagtail.contrib.modeladmin',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -54,10 +55,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
+    
     'django_countries',
+    'django_extensions',
+
+    'wagtailfontawesome',
+
     'widget_tweaks',
     'userauth',
+    'store',
 
 ]
 
@@ -172,7 +178,7 @@ WAGTAIL_SITE_NAME = "we"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
+BASE_URL = 'http://we.com'
 
 # swapping the default user model for the one created in CustomUser, in the userauth app
 AUTH_USER_MODEL = 'userauth.CustomUser'
@@ -200,5 +206,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'userauth.forms.SignupForm'
 ACCOUNT_USERNAME_BLACKLIST = ['test', 'admin', 'god', 'satan', 'bitch'] # Add offensive names here
 ACCOUNT_USERNAME_MIN_LENGTH = 4

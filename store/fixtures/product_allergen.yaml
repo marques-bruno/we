@@ -1,0 +1,36 @@
+- model: store.productallergen
+  pk: 1
+  fields:
+    ref_name: 'sulfites'
+    name: 'Sulfites' 
+    icon: '/static/icon_sulfites.png' 
+- model: store.productallergen
+  pk: 2
+  fields:
+    ref_name: 'gluten'
+    name: 'Gluten' 
+    icon: '/static/icon_gluten.png' 
+- model: store.productallergen
+  pk: 3
+  fields:
+    ref_name: 'nuts'
+    name: 'Nuts' 
+    icon: '/static/icon_nuts.png' 
+- model: store.productallergen
+  pk: 4
+  fields:
+    ref_name: 'peanuts'
+    name: 'Peanuts' 
+    icon: '/static/icon_peanuts.png' 
+- model: store.productallergen
+  pk: 5
+  fields:
+    ref_name: 'eggs'
+    name: 'Eggs' 
+    icon: '/static/icon_eggs.png' 
+- model: store.productallergen
+  pk: 6
+  fields:
+    ref_name: 'milk'
+    name: 'Milk' 
+    icon: '/static/icon_milk.png' 
