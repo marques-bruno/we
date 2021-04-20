@@ -17,6 +17,9 @@ class CustomUser(AbstractUser):
     additional_information = models.CharField(verbose_name=tr("Additional information"), max_length=4096, blank=True, null=True)
     picture = models.ImageField(verbose_name=tr("Profile Picture"), upload_to='profile_pics/', default='profile_pics/default-user-avatar.png')
 
+    is_supplier = models.BooleanField(blank=False, default=False)
+    is_manager = models.BooleanField(blank=False, default=False)
+
     class Meta:
         ordering = ['last_name']
 
