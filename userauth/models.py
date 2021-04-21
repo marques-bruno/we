@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as tr
 from django_countries.fields import CountryField
+from django.conf import settings
 
 class CustomUser(AbstractUser):
 
@@ -19,9 +20,36 @@ class CustomUser(AbstractUser):
 
     is_supplier = models.BooleanField(blank=False, default=False)
     is_manager = models.BooleanField(blank=False, default=False)
-
     class Meta:
         ordering = ['last_name']
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
+
+
+class CustomerUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Customer"
+        verbose_name_plural = "Customers"
+
+
+class SupplierUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Supplier"
+        verbose_name_plural = "Suppliers"
+
+
+class ManagerUser(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Manager"
+        verbose_name_plural = "Managers"

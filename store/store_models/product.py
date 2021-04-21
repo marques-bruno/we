@@ -1,7 +1,8 @@
 from django.db import models
 from wagtail.admin.edit_handlers import RichTextField
 
-from .supplier import Supplier
+from userauth.models import SupplierUser
+
 from .product_unit import ProductUnit
 from .product_type import ProductType
 from .product_label import ProductLabel
@@ -14,7 +15,7 @@ class Product(models.Model):
         Join tables include ProductLabel, ProductType and ProductAllergen
     """
     name = models.CharField(max_length=200, null=False, blank=False, default=None)
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null=False, blank=False, default=None)
+    supplier = models.ForeignKey(SupplierUser, on_delete=models.CASCADE, null=False, blank=False, default=None)
     price = models.FloatField(default=9999.99)
     quantity = models.IntegerField(default=0)
     quantity_per_unit = models.FloatField(default=1)

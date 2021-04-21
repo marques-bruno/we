@@ -2,15 +2,14 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Sign Up" %}{% endblock %}
+{% block head_title %}{% trans "Sign Up as a Supplier" %}{% endblock %}
 
 {% block card-header %}
-<h3>{% trans "Create an account" %}</h3>
+<h3>{% trans "Create a Supplier account" %}</h3>
 {% endblock %}
 
 {% block card-body %}
-
-<form method="POST" action="{% url 'customer_signup' %}" class="needs-validation" novalidate>
+<form method="POST" action="{% url 'supplier_signup' %}" class="needs-validation" novalidate>
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -22,23 +21,27 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            {% with field=form.password1 %}{% include "account/form_field.html" %}{% endwith %}
-        </div>
-        <div class="form-group col-md-6">
-            {% with field=form.password2 %}{% include "account/form_field.html" %}{% endwith %}
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
             {% with field=form.first_name %}{% include "account/form_field.html" %}{% endwith %}
         </div>
         <div class="form-group col-md-6">
             {% with field=form.last_name %}{% include "account/form_field.html" %}{% endwith %}
         </div>
     </div>
+    {% comment %} <div class="form-row">
+        <div class="form-group col-md-6">
+            {% with field=form.mobile_phone %}{% include "account/form_field.html" %}{% endwith %}
+        </div>
+    </div> {% endcomment %}
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {% with field=form.password1 %}{% include "account/form_field.html" %}{% endwith %}
+        </div>
+        <div class="form-group col-md-6">
+            {% with field=form.password2 %}{% include "account/form_field.html" %}{% endwith %}
+        </div>
+    </div>
     <button type="submit" class="btn btn-outline-primary">{% trans "Sign Up" %}</button>
 </form>
-
 {% endblock %}
 
 {% block card-footer %}

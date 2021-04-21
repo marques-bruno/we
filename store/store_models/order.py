@@ -1,9 +1,11 @@
 from django.db import models
 
-from . import Customer
+from userauth.models import CustomerUser
+from userauth.models import SupplierUser
+from userauth.models import ManagerUser
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    customer = models.ForeignKey(CustomerUser, on_delete=models.SET_NULL, null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
