@@ -6,10 +6,7 @@ from django_countries.fields import CountryField
 from django.conf import settings
 from django.template.defaulttags import register
 
-from wagtail.core.models import Page
-from .profile_menus.models import ProfileMenuItem
-
-class CustomUser(AbstractUser):
+class User(AbstractUser):
 
     birthdate = models.DateField(verbose_name=tr("Date of birth"), blank=True, null=True)
     address1 = models.CharField(verbose_name=tr("Address line 1"), max_length=250, blank=True, null=True)
@@ -59,21 +56,3 @@ class ManagerUser(models.Model):
         verbose_name = "Manager"
         verbose_name_plural = "Managers"
 
-
-class ProfilePage(Page):
-    parent_page_types = ["home.HomePage"]
-
-    template = "account/account_base_template.html"
-    # subtitle = models.TextField(
-    #     blank=True,
-    #     max_length=500,
-    # )
-
-    # content_panels = Page.content_panels + [
-    #     FieldPanel('subtitle'),
-    # ]
-
-    # def get_context(self, request, *args, **kwargs):
-    #     context = super().get_context(request, *args, **kwargs)
-    #     context['services'] = ServicePage.objects.live().public()
-    #     return context

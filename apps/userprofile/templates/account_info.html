@@ -1,0 +1,103 @@
+{% extends 'userprofile/account/account_profile_base.html' %}
+{% load i18n static %}
+
+{% block tab_title %}
+    <h4>Account Information</h4>
+{% endblock tab_title %}
+
+{% block tab_content %}
+{% load i18n socialaccount %}
+
+    {% get_providers as socialaccount_providers %}
+
+    <form method="POST" action="{% url 'account_update' request.user.pk %}" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+            <div class= "form-group col-md-8" >
+                <div class= "form-group row-md-8" >
+                    <div class="form-row col-md-12">
+                        {% with field=form.username default=request.user.username readonly="readonly" %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                    <div class="form-row col-md-12">
+                        {% with field=form.email default=request.user.email readonly="readonly" %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                </div>
+                <div class= "form-group row-md-8" >
+                    <div class="form-row col-md-12">
+                        {% with field=form.first_name default=request.user.first_name %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                    <div class="form-row col-md-12">
+                        {% with field=form.last_name default=request.user.last_name %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class= "col-md-4 border">
+                <img src="{{ request.user.picture.url}}" class="profile-image" alt="{% trans "User's profile Picture" %}" style='width: 100%; height: auto;'>
+                <div class="form-group">
+                    {% with field=form.picture default=request.user.picture %}{% include "account/form_field.html" %}{% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {% if request.user.address1 == None %}
+                    {% with field=form.address1 %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.address1 default=request.user.address1 %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {% if request.user.address2 == None %}
+                    {% with field=form.address2 %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.address2 default=request.user.address2 %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            {% if request.user.city == None %}
+                    {% with field=form.city %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.city default=request.user.city %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+            </div>
+            <div class="form-group col-md-2">
+            {% if request.user.zip_code == None %}
+                    {% with field=form.zip_code %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.zip_code default=request.user.zip_code %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+            </div>
+            <div class="form-group col-md-4">
+                {% with field=form.country default=request.user.country %}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            {% if request.user.mobile_phone == None %}
+                    {% with field=form.mobile_phone %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.mobile_phone default=request.user.mobile_phone %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+            </div>
+            <div class="form-group col-md-6">
+                {% with field=form.birthdate default=request.user.birthdate %}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+        </div>
+        <div class="form-group">
+            {% if request.user.additional_information == None %}
+                    {% with field=form.additional_information %}{% include "account/form_field.html" %}{% endwith %}
+            {% else %}
+                {% with field=form.additional_information default=request.user.additional_information %}{% include "account/form_field.html" %}{% endwith %}
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-outline-primary">{% trans "Update" %}</button>
+    </form>
+    <br>
+    {% if socialaccount_providers %}
+        <br>
+        <p>{% blocktrans with site.name as site_name %}Connect your existing account to one of your social accounts:{% endblocktrans %}</p>
+        {% include "socialaccount/provider_list.html" with process="connect" %}
+    {% endif %}
+
+{% endblock tab_content %}

@@ -1,0 +1,44 @@
+{% extends 'userauth/account/base_card.html' %}
+
+{% load i18n static menu_tags %}
+
+
+{% block title %}{% trans "Your Account" %}{% endblock title %}
+
+{% block card-header %}
+    <h3>{% trans "Your Account" %}</h3>
+{% endblock card-header %}
+
+{% block card-body %}
+    {% get_menu "customerprofile" as menuitems %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 ">
+                <div class="list-group ">
+                {% for item in menuitems.menu_items.all %}
+                    <a href="{{ item.item_page.url }}" class="list-group-item list-group-item-action {% if item.item_page.slug == tab %}active{% endif %}">
+                        {{item.item_page.title}}
+                    </a>
+                {% endfor %}
+                </div> 
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% block tab_title %}{% endblock %}
+                                <hr>
+                            </div>
+                        </div>
+                        {% block tab_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock card-body %}
+
+{% block card-footer %}
+    <a href="{% url 'account_delete' request.user.pk %}">{% trans "Delete your account" %}</a>
+{% endblock card-footer %}

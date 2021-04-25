@@ -1,1 +1,0 @@
-from .profile_menus.wagtail_hooks import *

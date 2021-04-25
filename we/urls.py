@@ -34,6 +34,8 @@ if settings.DEBUG:
 
 urlpatterns = urlpatterns + [
     path('', include('userauth.urls')),
+    path('', include('userprofile.urls')),
+    
     path('', include('allauth.urls')),
 
     # For anything not caught by a more specific rule above, hand over to

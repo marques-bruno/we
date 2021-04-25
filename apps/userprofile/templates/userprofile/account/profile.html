@@ -1,0 +1,9 @@
+{% extends 'userprofile/account/account_profile_base.html' %}
+{% load i18n static %}
+{% block tab_content %}
+    {% include "userprofile/account/update_form.html" %}
+{% endblock %}
+
+{% comment %} {% block card-footer %}
+    <a href="{% url 'account_update' request.user.pk %}">{% trans "Update your account" %}</a>
+{% endblock %} {% endcomment %}

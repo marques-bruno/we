@@ -1,4 +1,4 @@
-from .models import CustomUser, CustomerUser, SupplierUser, ManagerUser
+from .models import User, CustomerUser, SupplierUser, ManagerUser
 from wagtail.users.forms import UserCreationForm, UserEditForm
 from django import forms
 from django.forms import ModelForm
@@ -8,21 +8,13 @@ from django.core.validators import RegexValidator
 
 class WagtailUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
-        model = CustomUser
+        model = User
         widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
 
 
 class WagtailUserEditForm(UserEditForm):
     class Meta(UserEditForm.Meta):
-        model = CustomUser
-        widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
-
-
-
-class CustomUserUpdateForm(ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'first_name', 'last_name', 'birthdate', 'address1', 'address2', 'zip_code', 'city', 'country', 'mobile_phone', 'additional_information', 'picture', 'is_supplier', 'is_manager']
+        model = User
         widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
 
 

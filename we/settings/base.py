@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     'widget_tweaks',
     'userauth',
+    'userprofile',
     'store',
 
 ]
@@ -184,7 +185,7 @@ WAGTAIL_SITE_NAME = "we"
 BASE_URL = 'http://we.com'
 
 # swapping the default user model for the one created in CustomUser, in the userauth app
-AUTH_USER_MODEL = 'userauth.CustomUser'
+AUTH_USER_MODEL = 'userauth.User'
 
 # Adding necessary forms, with custom fields, for Wagtail's admin backend
 WAGTAIL_USER_CREATION_FORM = 'userauth.forms.WagtailUserCreationForm'
