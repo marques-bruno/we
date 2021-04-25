@@ -1,5 +1,5 @@
-{% extends 'account/base_card.html' %}
-
+{% extends 'account/account_base_template.html' %}
+{% comment %} 
 {% load i18n static %}
 
 {% block title %}{% trans "Profile" %}{% endblock %}
@@ -81,4 +81,4 @@
 
 {% block card-footer %}
     <a href="{% url 'account_update' request.user.pk %}">{% trans "Update your account" %}</a>
-{% endblock %}
+{% endblock %} {% endcomment %}

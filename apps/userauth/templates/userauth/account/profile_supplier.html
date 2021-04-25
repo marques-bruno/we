@@ -1,0 +1,189 @@
+{% extends 'account/account_base_template.html' %}
+{% load i18n static %}
+{% block tab_content %}
+    {% include "account/update_form.html" %}
+{% endblock %}
+{% comment %} 
+{% block title %}{% trans "Your Account" %}{% endblock %}
+
+{% block card-header %}
+    <h3>{% trans "Your Account" %}</h3>
+{% endblock %}
+
+{% block card-body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 ">
+                <div class="list-group ">
+                <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a href="#" class="list-group-item list-group-item-action">User Management</a>
+                <a href="#" class="list-group-item list-group-item-action">Used</a>
+                <a href="#" class="list-group-item list-group-item-action">Enquiry</a>
+                <a href="#" class="list-group-item list-group-item-action">Dealer</a>
+                <a href="#" class="list-group-item list-group-item-action">Media</a>
+                <a href="#" class="list-group-item list-group-item-action">Post</a>
+                <a href="#" class="list-group-item list-group-item-action">Category</a>
+                <a href="#" class="list-group-item list-group-item-action">New</a>
+                <a href="#" class="list-group-item list-group-item-action">Comments</a>
+                <a href="#" class="list-group-item list-group-item-action">Appearance</a>
+                <a href="#" class="list-group-item list-group-item-action">Reports</a>
+                <a href="#" class="list-group-item list-group-item-action">Settings</a>
+                
+                
+                </div> 
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Your Profile</h4>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form>
+                                <div class="form-group row">
+                                    <label for="username" class="col-4 col-form-label">User Name*</label> 
+                                    <div class="col-8">
+                                    <input id="username" name="username" placeholder="Username" class="form-control here" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-4 col-form-label">First Name</label> 
+                                    <div class="col-8">
+                                    <input id="name" name="name" placeholder="First Name" class="form-control here" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lastname" class="col-4 col-form-label">Last Name</label> 
+                                    <div class="col-8">
+                                    <input id="lastname" name="lastname" placeholder="Last Name" class="form-control here" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="text" class="col-4 col-form-label">Nick Name*</label> 
+                                    <div class="col-8">
+                                    <input id="text" name="text" placeholder="Nick Name" class="form-control here" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="select" class="col-4 col-form-label">Display Name public as</label> 
+                                    <div class="col-8">
+                                    <select id="select" name="select" class="custom-select">
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-4 col-form-label">Email*</label> 
+                                    <div class="col-8">
+                                    <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="website" class="col-4 col-form-label">Website</label> 
+                                    <div class="col-8">
+                                    <input id="website" name="website" placeholder="website" class="form-control here" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="publicinfo" class="col-4 col-form-label">Public Info</label> 
+                                    <div class="col-8">
+                                    <textarea id="publicinfo" name="publicinfo" cols="40" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="newpass" class="col-4 col-form-label">New Password</label> 
+                                    <div class="col-8">
+                                    <input id="newpass" name="newpass" placeholder="New Password" class="form-control here" type="text">
+                                    </div>
+                                </div> 
+                                <div class="form-group row">
+                                    <div class="offset-4 col-8">
+                                    <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% include "account/update_form.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} <div class="container">
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "Email" %}:</small><br>
+                {{ request.user.email }}
+            </div>
+            <div class="col border">
+                <small>{% trans "User name" %}:</small><br>
+                {{ request.user.username }}
+            </div>
+        </div>
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "First name" %}:</small><br>
+                {{ request.user.first_name|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Last name" %}:</small><br>
+                {{ request.user.last_name|default:'' }}
+            </div>
+        </div>
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "Address Line 1" %}:</small><br>
+                {{ request.user.adress1|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Adress Line 2" %}:</small><br>
+                {{ request.user.adress2|default:'' }}
+            </div>
+        </div>
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "City" %}:</small><br>
+                {{ request.user.city|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Postal code" %}:</small><br>
+                {{ request.user.zip_code|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Country" %}:</small><br>
+                {{ request.user.country|default:'' }}
+            </div>
+        </div>
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "Mobile phone" %}:</small><br>
+                {{ request.user.mobile_phone|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Date of birth" %}:</small><br>
+                {{ request.user.birthdate|default:'' }}
+            </div>
+        </div>
+       <div class="row">
+            <div class="col border">
+                <small>{% trans "Additional information" %}:</small><br>
+                {{ request.user.additional_information|default:'' }}
+            </div>
+            <div class="col border">
+                <small>{% trans "Picture" %}:</small><br>
+                <img src="{{ request.user.picture.url}}" class="profile-image" alt="{% trans "User's profile Picture" %}">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block card-footer %}
+    <a href="{% url 'account_update' request.user.pk %}">{% trans "Update your account" %}</a>
+{% endblock %} {% endcomment %}

@@ -12,10 +12,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -87,7 +90,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(PROJECT_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'userauth/templates/userauth/'),
+            os.path.join(BASE_DIR+"/apps", 'userauth/templates/userauth/'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

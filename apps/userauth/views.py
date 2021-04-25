@@ -10,7 +10,12 @@ from allauth.account.views import SignupView
 
 @login_required
 def profile_view(request):
-    return render(request, 'account/profile.html')
+    # return render(request, 'account/profile.html')
+    return render(request, 'account/profile_supplier.html', {'model': CustomUser, 'form': CustomUserUpdateForm, 'success_url': reverse_lazy('account_profile')})
+
+@login_required
+def supplier_profile_view(request):
+    return render(request, 'account/profile_supplier.html')
 
 
 class CustomUserUpdateView(UpdateView):

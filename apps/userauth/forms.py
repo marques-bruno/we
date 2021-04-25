@@ -22,7 +22,7 @@ class WagtailUserEditForm(UserEditForm):
 class CustomUserUpdateForm(ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'birthdate', 'address1', 'address2', 'zip_code', 'city', 'country', 'mobile_phone', 'additional_information', 'picture', 'is_supplier', 'is_manager']
+        fields = ['username', 'email', 'first_name', 'last_name', 'birthdate', 'address1', 'address2', 'zip_code', 'city', 'country', 'mobile_phone', 'additional_information', 'picture', 'is_supplier', 'is_manager']
         widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
 
 

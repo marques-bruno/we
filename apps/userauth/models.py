@@ -4,6 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as tr
 from django_countries.fields import CountryField
 from django.conf import settings
+from django.template.defaulttags import register
+
+from wagtail.core.models import Page
+from .profile_menus.models import ProfileMenuItem
 
 class CustomUser(AbstractUser):
 
@@ -31,6 +35,7 @@ class CustomUser(AbstractUser):
         return f"{self.username}: {self.first_name} {self.last_name}"
 
 
+
 class CustomerUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -53,3 +58,22 @@ class ManagerUser(models.Model):
     class Meta:
         verbose_name = "Manager"
         verbose_name_plural = "Managers"
+
+
+class ProfilePage(Page):
+    parent_page_types = ["home.HomePage"]
+
+    template = "account/account_base_template.html"
+    # subtitle = models.TextField(
+    #     blank=True,
+    #     max_length=500,
+    # )
+
+    # content_panels = Page.content_panels + [
+    #     FieldPanel('subtitle'),
+    # ]
+
+    # def get_context(self, request, *args, **kwargs):
+    #     context = super().get_context(request, *args, **kwargs)
+    #     context['services'] = ServicePage.objects.live().public()
+    #     return context
