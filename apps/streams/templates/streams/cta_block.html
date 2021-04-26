@@ -1,16 +1,23 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags%}
 
-<div class="container mb-sm-5 mt-sm-5">
-    <div class="row">
-        <div class="col-md-5 offset-md-1 col-sm-12">
-            <h1>{{ self.title }}</h1>
-            {{ self.text|richtext }}
-
-            {% if self.button_page %}
-                <a href="{{ self.button_page.url }}">{{ self.button_text }}</a>
-            {% elif self.button_url %}
-                <a href="{{ self.button_url }}">{{ self.button_text }}</a>
-            {% endif %}
+{% image self.bg_image fill-1600x800 as img%}
+<div class="row vh-100 align-items-center" id="section" style="background-image: url({{ img.url }})">
+    <div class="container">
+        <div class="row justify-content-md-center input-group">
+                <select class="custom-select text-center cta-input" id="inputGroupSelect04">
+                    <option class="cta-input" disabled selected hidden>Select a pick-up point near you...</option>
+                    <option class="cta-input">Pick-up point #1 in Presov</option>
+                    <option class="cta-input">Pick-up point #2 in Presov</option>
+                    <option class="cta-input">Pick-up point #3 in Presov</option>
+                    <option class="cta-input">Pick-up point #1 in Kosice</option>
+                    <option class="cta-input">Pick-up point #2 in Kosice</option>
+                </select>
+            <div class="input-group-append">
+                <button class="btn btn-success cta-input" type="button">View products</button>
+            </div>
         </div>
+            <div class="text-center m-4">
+                <button class="btn btn-outline-success cta-input" type="button"><i class="fa fa-search"></i> <u>View pick-up points on the map</u></button>
+            </div>
     </div>
 </div>

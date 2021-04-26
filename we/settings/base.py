@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'userauth',
     'userprofile',
     'store',
+    'streams',
 
 ]
 

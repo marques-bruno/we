@@ -1,27 +1,69 @@
+
+* {
+  border-radius: 0 !important;
+  font-family: 'Rosario', sans-serif;
+}
+
+
 body, html {
   margin: 0px;
   width: 100%;
 }
 
 /* slightly transparent fallback */
-nav {
-  width: 100%;
-  height: 70px;
-  position: fixed;
-  background-size: cover;
-  opacity: 0.8;
-}
-
-/* if backdrop support: very transparent and blurred */
-@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
-  nav {
+@supports not (backdrop-filter: blur(10px)) {
+  .btn-outline-success {
+    background: rgba(60, 87, 16, 0.9) !important;
+    border-color: rgba(116, 143, 71, 1.0) !important;
+    color: white;
+  }
+  .btn-outline-success:hover {
+    background: rgba(33, 51, 4, 0.9) !important;
+    border-color: rgba(116, 143, 71, 1.0) !important;
+    color: white;
+  }
+  .navbar {
     width: 100%;
     height: 70px;
-    background: rgba(116, 143, 71, 0.5);
+    position: fixed;
+    background-size: cover;
+    background: rgba(60, 87, 16, 0.9) !important;
+    border-bottom: 1px solid #748F47 !important;
+  }
+  .navbar-fixed-top.scrolled {
+    background-color: rgba(10, 27, 6, 0.9)  !important;
+    transition: background-color 500ms linear;
+  }
+    
+}
+
+.navbar-fixed-top.scrolled {
+  background-color: rgba(10, 27, 6, 0.9)  !important;
+  transition: background-color 500ms linear;
+}
+
+
+.navbar {
+    width: 100%;
+    height: 70px;
+    background: rgba(116, 143, 71, 0.27);
     position: fixed;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px)
-  }
+}
+.btn-outline-success {
+  background: rgba(116, 143, 71, 0.27);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(116, 143, 71, 1.0);
+  color: white;
+}
+.btn-outline-success:hover {
+  background: rgba(116, 143, 71, 0.7);
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(116, 143, 71, 1.0);
+  color: white; */
 }
 
 .nav-content {
@@ -38,7 +80,77 @@ nav {
 
 .content {
   clear: both;
-  /* width: 700px;
-  margin: 0 auto;
-  padding-top: 100px; */
+}
+
+#section {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.cta-input {
+  opacity: 0.9;
+  min-height: 70px;
+  font-size: x-large !important;
+  -webkit-appearance: none;
+}
+
+.success,.btn-success{
+  background-color: #748F47 !important;
+  opacity: 1
+}
+.btn-success:hover {
+  background-color: #324413 !important;
+  opacity: 1
+}
+
+
+select.text-center {
+  text-align-last:center;
+}
+
+.nav-link {
+  font-size: 18px;
+  color: white !important;
+}
+
+.card-body {
+  background-color: #c4c4c4 !important;
+  font-size: 16px;
+}
+
+.card-text {
+  background-color: #e5e5e5 !important;
+  color: #748F47 !important;
+  font-size: 16px;
+}
+
+.card-overlay {
+  position: relative;
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  .card-content-overlay {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #DDD;
+    opacity: 0.5;
+    color: black;
+    font-size: 17px;
+  }
+}
+
+.card-content-overlay {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  background: rgba(255,255,255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: black;
+  font-size: 17px;
 }

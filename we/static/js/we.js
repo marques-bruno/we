@@ -1,5 +1,11 @@
-var pageContent = document.getElementById("content"),
-	pagecopy = pageContent.cloneNode(true),
-	blurryContent = document.getElementById("blurryscroll");
-	blurryContent.appendChild(pagecopy);
-	window.onscroll = function() { blurryContent.scrollTop = window.pageYOffset; }
+$(function () {
+	$(document).scroll(function () {
+	var $nav = $(".navbar-fixed-top");
+	$nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+	});
+});
+
+$(document).scroll(function () {
+	var $nav = $(".navbar-fixed-top");
+	$nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+});

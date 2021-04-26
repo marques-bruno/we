@@ -1,5 +1,6 @@
 """Streamfields live in here."""
 
+from django.db import models
 from wagtail.core import blocks
 from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.images.blocks import ImageChooserBlock
@@ -21,11 +22,12 @@ class CardBlock(blocks.StructBlock):
     """Cards with image and text and button(s)."""
 
     title = blocks.CharBlock(required=True, help_text="Add your title")
+    bg_image = ImageChooserBlock(required=False, blank=False, null=True, on_delete=models.SET_NULL)
 
     cards = blocks.ListBlock(
         blocks.StructBlock(
             [
-                ("image", ImageChooserBlock(required=True)),
+                ("image", ImageChooserBlock(required=False)),
                 ("title", blocks.CharBlock(required=True, max_length=40)),
                 ("text", blocks.TextBlock(required=True, max_length=200)),
                 ("button_page", blocks.PageChooserBlock(required=False)),
@@ -76,6 +78,7 @@ class SimpleRichtextBlock(blocks.RichTextBlock):
 class CTABlock(blocks.StructBlock):
     """A simple call to action section."""
 
+    bg_image = ImageChooserBlock(required=True)
     title = blocks.CharBlock(required=True, max_length=60)
     text = blocks.RichTextBlock(required=True, features=["bold", "italic"])
     button_page = blocks.PageChooserBlock(required=False)
