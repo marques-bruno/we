@@ -31,9 +31,9 @@ class SupplierAdmin(ModelAdmin):
   menu_order = 290
   add_to_settings_menu = False
   exclude_from_explorer = True
-  list_display = ("first_name", "last_name", "email", "phone_number", "address1", "city", "zip_code", "country")
+  list_display = ("brand_name", "username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
   # list_filter = ("first_name", "last_name", "city", "zip_code", "country")
-  search_fields = ("first_name", "last_name", "email", "phone_number", "address1", "city", "zip_code", "country")
+  search_fields = ("brand_name", "username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
 
   empty_value_display = 'N/A'
 

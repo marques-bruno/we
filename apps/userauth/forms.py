@@ -69,7 +69,7 @@ class SupplierSignupForm(SignupForm):
     ## the OneToOneField to User
     ## (N.B: do NOT try to declare Meta class with model=SupplierUser,
     ## it won't work!) ex:
-
+    brand_name = forms.CharField(max_length=100, label=tr("Brand name"))
     first_name = forms.CharField(max_length=30, label=tr("First name"))
     last_name = forms.CharField(max_length=30, label=tr("Last name"))
     # phone_regex = RegexValidator(regex=r"^\+(?:[0-9]●?){6,14}[0-9]$", message=tr("Enter a valid international mobile phone number starting with +(country code)"))
@@ -81,12 +81,12 @@ class SupplierSignupForm(SignupForm):
     def clean(self):
         super(SupplierSignupForm, self).clean()
 
+
     ## Override the save method to save the extra fields
     ## (otherwise the form will save the User instance only)
     def save(self, request):
         ## Save the User instance and get a reference to it
         user = super(SupplierSignupForm, self).save(request)
-
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         # user.mobile_phone = self.cleaned_data['mobile_phone']
@@ -100,6 +100,7 @@ class SupplierSignupForm(SignupForm):
         ## extra cleaning just override the clean method as usual)
         supplier_user = SupplierUser(
             user=user,
+            brand_name=self.cleaned_data['brand_name']
             ## Here add your extra fields from the SupplierUser table
             # supplieruser_fields=self.cleaned_data.get('supplieruser_fields')
         )

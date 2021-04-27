@@ -19,6 +19,7 @@ class HomePage(Page):
     body = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
         ("cards", blocks.CardBlock()),
+        ("products", blocks.ProductCardBlock()),
         ("richtext", blocks.RichtextBlock()),
         ("simplerichtext", blocks.SimpleRichtextBlock()),
         ("cta", blocks.CTABlock()),

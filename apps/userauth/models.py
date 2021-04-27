@@ -21,7 +21,7 @@ class User(AbstractUser):
 
     is_supplier = models.BooleanField(blank=False, default=False)
     is_manager = models.BooleanField(blank=False, default=False)
-    
+
     class Meta:
         ordering = ['last_name']
 
@@ -150,6 +150,8 @@ class SupplierUser(models.Model):
         return self.user.picture
     picture.short_description = 'avatar'
 
+    def __str__(self):
+        return self.brand_name
 
     class Meta:
         verbose_name = "Supplier"

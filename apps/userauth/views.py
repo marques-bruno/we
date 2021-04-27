@@ -20,7 +20,7 @@ customer_signup = CustomerUserSignupView.as_view()
 class SupplierUserSignupView(SignupView):
     # The referenced HTML content can be copied from the signup.html
     # in the django-allauth template folder
-    template_name = 'account/signup_supplier.html'
+    template_name = 'account/supplier_signup.html'
     # the previously created form class
     form_class = SupplierSignupForm
 
@@ -36,7 +36,7 @@ supplier_signup = SupplierUserSignupView.as_view()
 class ManagerUserSignupView(SignupView):
     # The referenced HTML content can be copied from the signup.html
     # in the django-allauth template folder
-    template_name = 'account/signup_manager.html'
+    template_name = 'account/manager_signup.html'
     # the previously created form class
     form_class = ManagerSignupForm
 

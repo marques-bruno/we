@@ -1,10 +1,11 @@
 """Streamfields live in here."""
 
+from django import forms
 from django.db import models
 from wagtail.core import blocks
 from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.images.blocks import ImageChooserBlock
-
+import store
 
 class TitleAndTextBlock(blocks.StructBlock):
     """Title and text and nothing else."""
@@ -46,6 +47,62 @@ class CardBlock(blocks.StructBlock):
         template = "streams/card_block.html"
         icon = "placeholder"
         label = "Staff Cards"
+
+
+
+class RadioSelectBlock(blocks.ChoiceBlock):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.field.widget = forms.RadioSelect(
+            choices=self.field.widget.choices
+        )
+
+
+class ProductCardBlock(blocks.StructBlock):
+    """Cards with image and text and button(s)."""
+
+    title = blocks.CharBlock(required=True, help_text="Add your title")
+    bg_image = ImageChooserBlock(required=False, blank=False, null=True, on_delete=models.SET_NULL)
+    sort_by = RadioSelectBlock(choices=(
+            ("no_sort", "Don't sort"),
+            ("most_recent", "Most Recently added"),
+            ("best_sellers", "Best sellers"),
+        ),
+        default='no_sort',
+        help_text='Choose how you want the products sorted')
+    filter_by = blocks.ChoiceBlock(choices=(
+            ("producer", "Sort by producer"),
+            ("type", "Sort by type"),
+            ("label", "Sort by label"),
+            ("pickup_point", "Sort by Pickup point"),
+        ),
+        default='no_sort',
+        help_text='Choose how you want the products filtered')
+
+
+
+    def no_sort(self, products):
+        return products
+
+    def most_recent(self, products):
+        return sorted(products, key=lambda x: x.id, reverse=True)
+
+    def best_sellers(self, products):
+        # Todo: fetch orders, add together the number of sales for each item, store it in a table and sort accordingly
+        return sorted(products, key=lambda x: x)
+
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['products'] = self.__getattribute__(context['self']['sort_by'])(store.models.Product.objects.all())
+        return context
+
+
+    class Meta:  # noqa
+        template = "streams/product_cards_block.html"
+        icon = "placeholder"
+        label = "Product Cards block"
+
 
 
 class RichtextBlock(blocks.RichTextBlock):
