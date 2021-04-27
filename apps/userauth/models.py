@@ -21,6 +21,7 @@ class User(AbstractUser):
 
     is_supplier = models.BooleanField(blank=False, default=False)
     is_manager = models.BooleanField(blank=False, default=False)
+    
     class Meta:
         ordering = ['last_name']
 
@@ -36,6 +37,58 @@ class User(AbstractUser):
 class CustomerUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+    def username(self):
+        return self.user.username
+    username.short_description = 'User name'
+
+    def email(self):
+        return self.user.email
+    email.short_description = 'Email'
+
+    def first_name(self):
+        return self.user.first_name
+    first_name.short_description = 'First name'
+
+    def last_name(self):
+        return self.user.last_name
+    last_name.short_description = 'Last name'
+
+    def birthdate(self):
+        return self.user.birthdate
+    birthdate.short_description = 'Birth date'
+
+    def address1(self):
+        return self.user.address1
+    address1.short_description = 'Address 1'
+
+    def address2(self):
+        return self.user.address2
+    address2.short_description = 'Address 2'
+
+    def city(self):
+        return self.user.city
+    city.short_description = 'City'
+
+    def zip_code(self):
+        return self.user.zip_code
+    zip_code.short_description = 'Zip code'
+
+    def country(self):
+        return self.user.country
+    country.short_description = 'Country'
+
+    def mobile_phone(self):
+        return self.user.mobile_phone
+    mobile_phone.short_description = 'Mobile phone'
+
+    def additional_information(self):
+        return self.user.additional_information
+    additional_information.short_description = 'Additional information'
+
+    def picture(self):
+        return self.user.picture
+    picture.short_description = 'avatar'
+
     class Meta:
         verbose_name = "Customer"
         verbose_name_plural = "Customers"
@@ -43,6 +96,60 @@ class CustomerUser(models.Model):
 
 class SupplierUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    brand_name = models.CharField(verbose_name=tr("Brand name"), max_length=100, blank=True, null=True)
+
+    def username(self):
+        return self.user.username
+    username.short_description = 'User name'
+
+    def email(self):
+        return self.user.email
+    email.short_description = 'Email'
+
+    def first_name(self):
+        return self.user.first_name
+    first_name.short_description = 'First name'
+
+    def last_name(self):
+        return self.user.last_name
+    last_name.short_description = 'Last name'
+
+    def birthdate(self):
+        return self.user.birthdate
+    birthdate.short_description = 'Birth date'
+
+    def address1(self):
+        return self.user.address1
+    address1.short_description = 'Address 1'
+
+    def address2(self):
+        return self.user.address2
+    address2.short_description = 'Address 2'
+
+    def city(self):
+        return self.user.city
+    city.short_description = 'City'
+
+    def zip_code(self):
+        return self.user.zip_code
+    zip_code.short_description = 'Zip code'
+
+    def country(self):
+        return self.user.country
+    country.short_description = 'Country'
+
+    def mobile_phone(self):
+        return self.user.mobile_phone
+    mobile_phone.short_description = 'Mobile phone'
+
+    def additional_information(self):
+        return self.user.additional_information
+    additional_information.short_description = 'Additional information'
+
+    def picture(self):
+        return self.user.picture
+    picture.short_description = 'avatar'
+
 
     class Meta:
         verbose_name = "Supplier"

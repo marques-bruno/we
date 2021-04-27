@@ -1,7 +1,9 @@
 {% load wagtailimages_tags %}
 
 {% image self.bg_image fill-1600x800 as img%}
-<div class="row vh-100 align-items-center" id="section" style="background-image: {% if img.url %}url({{ img.url }}){% else %}#1a1e21{% endif %};">
+<div class="row vh-100 align-items-center" id="section" style="
+{% if img.url %}background-image: url({{ img.url }})
+{% else %}background-color: #1a1e21{% endif %};">
     <div class="container-fluid">
         <div class="row justify-content-md-center">
             <h1 class="mb-sm-5 text-center text-light">{{ self.title }}</h1>
@@ -27,7 +29,7 @@
                     <div class="card-overlay text-center">
                         <img class="card-img" src="{{ img.url }}" alt="{{ img.alt }}">
                         <div class="card-content-overlay">
-                            <p class="text-center m-2 text-black">10.99€ | 0.99€/kg</p>
+                            <p class="text-center m-2 text-black"">10.99€ | 0.99€/kg</p>
                         </div>
                     </div>
                 </div>
