@@ -2,6 +2,7 @@
 
 from django import forms
 from django.db import models
+from django.utils.translation import gettext_lazy as tr
 from wagtail.core import blocks
 from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.images.blocks import ImageChooserBlock
@@ -10,19 +11,19 @@ import store
 class TitleAndTextBlock(blocks.StructBlock):
     """Title and text and nothing else."""
 
-    title = blocks.CharBlock(required=True, help_text="Add your title")
-    text = blocks.TextBlock(required=True, help_text="Add additional text")
+    title = blocks.CharBlock(required=True, help_text=tr("Add your title"))
+    text = blocks.TextBlock(required=True, help_text=tr("Add additional text"))
 
     class Meta:  # noqa
         template = "streams/title_and_text_block.html"
         icon = "edit"
-        label = "Title & Text"
+        label = tr("Title & Text")
 
 
 class CardBlock(blocks.StructBlock):
     """Cards with image and text and button(s)."""
 
-    title = blocks.CharBlock(required=True, help_text="Add your title")
+    title = blocks.CharBlock(required=True, help_text=tr("Add your title"))
     bg_image = ImageChooserBlock(required=False, blank=False, null=True, on_delete=models.SET_NULL)
 
     cards = blocks.ListBlock(
@@ -36,7 +37,7 @@ class CardBlock(blocks.StructBlock):
                     "button_url",
                     blocks.URLBlock(
                         required=False,
-                        help_text="If the button page above is selected, that will be used first.",  # noqa
+                        help_text=tr("If the button page above is selected, that will be used first."),  # noqa
                     ),
                 ),
             ]
@@ -46,7 +47,7 @@ class CardBlock(blocks.StructBlock):
     class Meta:  # noqa
         template = "streams/card_block.html"
         icon = "placeholder"
-        label = "Staff Cards"
+        label = tr("Staff Cards")
 
 
 
@@ -61,25 +62,28 @@ class RadioSelectBlock(blocks.ChoiceBlock):
 class ProductCardBlock(blocks.StructBlock):
     """Cards with image and text and button(s)."""
 
-    title = blocks.CharBlock(required=True, help_text="Add your title")
+    title = blocks.CharBlock(required=True, help_text=tr("Add your title"))
     bg_image = ImageChooserBlock(required=False, blank=False, null=True, on_delete=models.SET_NULL)
     sort_by = RadioSelectBlock(choices=(
-            ("no_sort", "Don't sort"),
-            ("most_recent", "Most Recently added"),
-            ("best_sellers", "Best sellers"),
+            ("no_sort", tr("Don't sort")),
+            ("most_recent", tr("Most Recently added")),
+            ("best_sellers", tr("Best sellers")),
+            ("your favorites", tr("Best sellers")),
         ),
         default='no_sort',
-        help_text='Choose how you want the products sorted')
+        help_text=tr('Choose how you want the products sorted'))
     filter_by = blocks.ChoiceBlock(choices=(
-            ("producer", "Sort by producer"),
-            ("type", "Sort by type"),
-            ("label", "Sort by label"),
-            ("pickup_point", "Sort by Pickup point"),
+            ("no_sort", tr("Don't sort")),
+            ("producer", tr("Sort by producer")),
+            ("type", tr("Sort by type")),
+            ("label", tr("Sort by label")),
+            ("pickup_point", tr("Sort by Pickup point")),
+            ("already_ordered", tr("Show only products this customer already ordered")),
         ),
         default='no_sort',
-        help_text='Choose how you want the products filtered')
+        help_text=tr('Choose how you want the products filtered'))
 
-
+    max_cards = blocks.IntegerBlock(max_value=6, help_text=tr("Number of cards to display on the page section (max. 6)"))
 
     def no_sort(self, products):
         return products
@@ -91,17 +95,15 @@ class ProductCardBlock(blocks.StructBlock):
         # Todo: fetch orders, add together the number of sales for each item, store it in a table and sort accordingly
         return sorted(products, key=lambda x: x)
 
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context['products'] = self.__getattribute__(context['self']['sort_by'])(store.models.Product.objects.all())
+        context['products'] = self.__getattribute__(context['self']['sort_by'])(store.models.Product.objects.all())[:6]
         return context
-
 
     class Meta:  # noqa
         template = "streams/product_cards_block.html"
         icon = "placeholder"
-        label = "Product Cards block"
+        label = tr("Product Cards block")
 
 
 
