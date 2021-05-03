@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'wagtailfontawesome',
+    'wagtailuiplus',
 
     'widget_tweaks',
     'userauth',
