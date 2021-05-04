@@ -12,22 +12,28 @@ from wagtail.images.models import Image
 
 from streams import blocks
 
+
 class HomePage(Page):
     parent_page_types = ["wagtailcore.Page"]
     max_count = 1
 
-    body = StreamField([
+            
+    standard = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
-        ("cards", blocks.CardBlock()),
-        ("products", blocks.ProductCardBlock()),
         ("richtext", blocks.RichtextBlock()),
         ("simplerichtext", blocks.SimpleRichtextBlock()),
-        ("cta", blocks.CTABlock()),
         ("buttons", blocks.ButtonBlock()),
     ], null=True, blank=True)
 
+    sections = StreamField([
+        ("cards", blocks.CardBlock()),
+        ("products", blocks.ProductCardBlock()),
+        ("cta", blocks.CTABlock()),
+    ], null=True, blank=True)
+
     content_panels = Page.content_panels + [
-        StreamFieldPanel("body"),
+        StreamFieldPanel("standard"),
+        StreamFieldPanel("sections"),
     ]
 
 

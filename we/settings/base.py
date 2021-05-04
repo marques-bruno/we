@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'wagtailfontawesome',
-    'wagtailuiplus',
 
     'widget_tweaks',
     'userauth',
@@ -71,6 +70,7 @@ INSTALLED_APPS = [
     'store',
     'streams',
 
+    'wagtailuiplus',
 ]
 
 MIDDLEWARE = [
