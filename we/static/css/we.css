@@ -4,13 +4,8 @@
   font-family: 'Rosario', sans-serif;
 }
 
-
-body, html {
-  margin: 0px;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden;
-}
+/* hack to avoid overflow-hidden on html body, which causes js scroll feature to malfunction */
+.row { margin: 0; padding: 0 }
 
 /* slightly transparent fallback */
 @supports not (backdrop-filter: blur(10px)) {
