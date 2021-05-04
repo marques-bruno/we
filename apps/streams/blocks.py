@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as tr
 from wagtail.core import blocks
 from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.core.blocks import MultipleChoiceBlock
 
 from userauth.models import SupplierUser, CustomerUser, ManagerUser
 from store import store_models
@@ -112,7 +111,7 @@ class CardFilterBlock(blocks.StructBlock):
         ## todo(@bmarques): Filter by labels (multiple choice field)
         return {k: v for k, v in store_models.Product.objects.all().items() if v.label == ctx['self']['filters']['by_labels']}
 
-    by_labels = MultipleChoiceBlock(choices=store_models.ProductLabel.objects.all(),
+    by_labels = blocks.ChoiceBlock(choices=store_models.ProductLabel.objects.all(),
         help_text=tr("Choose which product labels you want to see"),
         classname=(
             'wagtailuiplus__choice-handler-target--filter_by '
@@ -128,7 +127,7 @@ class CardFilterBlock(blocks.StructBlock):
         ## todo(@bmarques): Filter by allergen (multiple choice field)
         return {k: v for k, v in store_models.Product.objects.all().items() if v.allergens == ctx['self']['filters']['by_allergens']}
 
-    by_allergens = MultipleChoiceBlock(choices=store_models.ProductAllergen.objects.all(),
+    by_allergens = blocks.ChoiceBlock(choices=store_models.ProductAllergen.objects.all(),
         help_text=tr("Choose which product labels you want to see"),
         classname=(
             'wagtailuiplus__choice-handler-target--filter_by '
