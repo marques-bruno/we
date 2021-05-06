@@ -108,7 +108,7 @@
 }
 
 .btn-success:hover {
-  background-color: #324413 !important;
+  background-color: #677949 !important;
   opacity: 1
 }
 
@@ -161,4 +161,12 @@ select.text-center {
   -webkit-backdrop-filter: blur(10px);
   color: black;
   font-size: 17px;
+}
+
+.bg-footer-top {
+  background-color: #677949;
+}
+
+.bg-footer-bottom {
+  background-color: #748F47;
 }

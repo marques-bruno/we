@@ -2,34 +2,40 @@ from userauth.models import User
 
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic import View, RedirectView
 from django.urls import reverse_lazy
 from .forms import UserUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+
 
 @login_required
 def profile_view(request):
-    return render(request, 'dashboard.html', {
-        'tab': 'dashboard',
-    })
+        return redirect('account_dashboard')
 
 
 @login_required
-def supplier_profile_view(request):
-    return render(request, 'userprofile/account/profile_supplier.html')
+def account_dashboard_view(request):
+    return render(request, 'userprofile/account/account_dashboard.html')
 
 
-class UserUpdateView(UpdateView):
+class AccountUpdateView(UpdateView):
     model = User
     form_class = UserUpdateForm
-    success_url = reverse_lazy('account_profile')
-    template_name='account/update.html'
+    success_url = reverse_lazy('account_dashboard')
+    template_name='userprofile/account/account_update.html'
 
-user_update_view = UserUpdateView.as_view()
+account_update_view = login_required(AccountUpdateView.as_view())
 
 
-class UserDeleteView(DeleteView):
+@login_required
+def account_message_board_view(request):
+    return render(request, 'userprofile/account/account_message_board.html')
+
+
+class AccountDeleteView(DeleteView):
     model = User
-    success_url = reverse_lazy('account_signup')
-    template_name='account/delete.html'
+    success_url = reverse_lazy('customer_signup')
+    template_name='userauth/account/delete.html'
 
-user_delete_view = UserDeleteView.as_view()
+account_delete_view = login_required(AccountDeleteView.as_view())

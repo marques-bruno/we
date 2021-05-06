@@ -6,7 +6,8 @@ from userauth.models import ManagerUser
 
 class Order(models.Model):
     customer = models.ForeignKey(CustomerUser, on_delete=models.SET_NULL, null=True, blank=True)
-    date_ordered = models.DateTimeField(auto_now_add=True)
+    date_started = models.DateTimeField(auto_now_add=True)
+    date_ordered = models.DateTimeField()
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
 

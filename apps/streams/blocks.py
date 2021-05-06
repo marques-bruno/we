@@ -83,7 +83,7 @@ class ProductCardBlock(blocks.StructBlock):
     filters = blocks.StreamBlock(
         [
             ('by_supplier', blocks.ChoiceBlock(
-                choices=tuple([(element.pk, element.name) for element in SupplierUser.objects.all()]),
+                choices=tuple([(element.pk, element.brand_name) for element in SupplierUser.objects.all()]),
                 help_text=tr("Choose which producer's products you want to see"),
             )),
             ('by_type', blocks.ChoiceBlock(
@@ -106,7 +106,7 @@ class ProductCardBlock(blocks.StructBlock):
             #     choices=store_models.PickupPoint.objects.all(),
             #     help_text=tr("Choose which pickup point products you want to see"),
             # )),
-        ], max_num=1
+        ], max_num=1, required=False,
     )
 
     max_cards = blocks.IntegerBlock(max_value=6, help_text=tr("Number of cards to display on the page section (max. 6)"))
@@ -127,34 +127,35 @@ class ProductCardBlock(blocks.StructBlock):
 
 
 
-    def products_by_producer(self, ctx, products):
-        return {k: v for k, v in products if v.supplier == ctx['self']['filters']['by_producer']}
+    def filter_by_supplier(self, ctx, products):
+        return {v for v in products if v.supplier_id == int(ctx['self']['filters'][0].value)}
 
-    def products_by_type(self, ctx, products):
-        return {k: v for k, v in products if v.type == ctx['self']['filters']['by_type']}
+    def filter_by_type(self, ctx, products):
+        return {v for v in products if v.type.pk == int(ctx['self']['filters'][0].value)}
 
-    def products_by_labels(self, ctx, products):
+    def filter_by_labels(self, ctx, products):
         ## todo(@bmarques): Filter by labels (multiple choice field)
-        return {k: v for k, v in products if v.label == ctx['self']['filters']['by_labels']}
+        return {v for v in products if v.label == ctx['self']['filters']['by_labels']}
 
-    def products_by_allergens(self, ctx, products):
+    def filter_by_allergens(self, ctx, products):
         ## todo(@bmarques): Filter by allergen (multiple choice field)
-        return {k: v for k, v in products if v.allergens == ctx['self']['filters']['by_allergens']}
+        return {v for v in products if v.allergens == ctx['self']['filters']['by_allergens']}
 
-    def products_by_pickup_point(self, ctx, products):
+    def filter_by_pickup_point(self, ctx, products):
         ## @Todo: Filtering products by pickup point is a bit more complicated, let's keep it for later
-        return {k: v for k, v in products if v.type == ctx['self']['filters']['by_pickup_point']}
+        return {v for v in products if v.type == ctx['self']['filters']['by_pickup_point']}
 
-    # def products_from_past_orders(self, ctx, products):
+    # def filter_from_past_orders(self, ctx, products):
     #     ## @Todo: Filtering products from a customer's past orders is a bit more complicated, let's keep it for later
-    #     return {k: v for k, v in products if v.type == ctx['self']['filters']['by_past_orders']}
+    #     return {v for v in products if v.type == ctx['self']['filters']['by_past_orders']}
         
 
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         ret = store_models.Product.objects.all()
-        ret = self.__getattribute__('filter_' + context['self']['filters']['block_type'])(ret)
+        if len(context['self']['filters']):
+            ret = self.__getattribute__('filter_' + context['self']['filters'][0].block_type)(context, ret)
         ret = self.__getattribute__('sort_' + context['self']['sort_by'])(ret)
         context['products'] = ret[:context['self']['max_cards']]
         return context
@@ -203,6 +204,13 @@ class CTABlock(blocks.StructBlock):
     button_page = blocks.PageChooserBlock(required=False)
     button_url = blocks.URLBlock(required=False)
     button_text = blocks.CharBlock(required=True, default='Learn More', max_length=40)
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['pickup_points'] = store_models.PickupPoint.objects.all()
+        return context
+
+
 
     class Meta:  # noqa
         template = "streams/cta_block.html"

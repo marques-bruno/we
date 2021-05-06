@@ -1,0 +1,23 @@
+{% load static wagtailcore_tags %}
+
+{% for product in products %}
+<div class="col-lg-4 col-sm-12 card-deck mb-5">
+    <div class="card border-0">
+        <div class="card-body p-0 pt-1 bg-secondary">
+            <h5 class="card-title text-center p-0 m-0">{{ product.name }}</h5>
+            <p class="card-subtitle text-center p-0 m-0">{{ product.supplier }} ({{product.quantity_per_unit}}{{ product.unit }})</p>
+        </div>
+        <div class="card-text">
+            <p class="text-center m-1">{{ product.description|richtext }}</p>
+        </div>
+        <div class="card-overlay text-center">
+            <div class="embed-responsive embed-responsive-16by9">
+                <img class="card-img embed-responsive-item" src="{{ product.image.url }}" alt="{{ product.image.alt }}" style="object-fit: cover;"/>
+            </div>
+            <div class="card-content-overlay">
+                <p class="text-center m-2 text-black">{{ product.price }}€/kg</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

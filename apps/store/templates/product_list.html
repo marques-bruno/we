@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row vh-100 align-items-center" id="section" style="background-color: #1a1e21;">
+    <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <h1 class="mb-sm-5 text-center text-light">Here's our selection of products</h1>
+        </div>
+
+        <div class="row justify-content-md-center">
+            {% include "streams/product_card.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

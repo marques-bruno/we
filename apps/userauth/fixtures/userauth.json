@@ -1,0 +1,142 @@
+[
+{
+    "model": "userauth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$obJo4LGhNtTC$o888r2kZ1M7CR5d6w/BQ0d/BleA75t6SBVDgOGnbzkc=",
+        "last_login": "2021-05-05T08:36:19.769Z",
+        "is_superuser": true,
+        "username": "bmarques",
+        "first_name": "",
+        "last_name": "",
+        "email": "bmarques68@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-05-04T11:01:13.980Z",
+        "birthdate": null,
+        "address1": null,
+        "address2": null,
+        "zip_code": null,
+        "city": null,
+        "country": null,
+        "mobile_phone": null,
+        "additional_information": null,
+        "picture": "profile_pics/default-user-avatar.png",
+        "is_supplier": false,
+        "is_manager": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "userauth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$BJSFJXzAWaA9$ZicKKSpnwVJxTO7HF8jwsYm6iRPsVKkBrO+QFspg1gs=",
+        "last_login": "2021-05-05T08:27:01.872Z",
+        "is_superuser": false,
+        "username": "mrpotato",
+        "first_name": "Potato",
+        "last_name": "Head",
+        "email": "mrpotato@head.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-05T08:26:41.796Z",
+        "birthdate": null,
+        "address1": null,
+        "address2": null,
+        "zip_code": null,
+        "city": null,
+        "country": null,
+        "mobile_phone": null,
+        "additional_information": null,
+        "picture": "profile_pics/default-user-avatar.png",
+        "is_supplier": true,
+        "is_manager": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "userauth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$gyjETKO4w2vm$I0orLx/3w1SsSUDAScpOv3lGzbgC1D9aD7377ykMBbE=",
+        "last_login": "2021-05-05T08:30:41.516Z",
+        "is_superuser": false,
+        "username": "lafermedubec",
+        "first_name": "Perrine et Charles",
+        "last_name": "Herve-Gruyer",
+        "email": "lafermedubec@inra.fr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-05T08:30:33.789Z",
+        "birthdate": null,
+        "address1": null,
+        "address2": null,
+        "zip_code": null,
+        "city": null,
+        "country": null,
+        "mobile_phone": null,
+        "additional_information": null,
+        "picture": "profile_pics/default-user-avatar.png",
+        "is_supplier": true,
+        "is_manager": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "userauth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$BAAnphwvR3H9$wiiecLv3qyKWanQHyZ1w8y6aAbP0A3BqCUl6SJU10P8=",
+        "last_login": "2021-05-05T08:44:17.150Z",
+        "is_superuser": false,
+        "username": "damien.dekarz",
+        "first_name": "Damien",
+        "last_name": "Dekarz",
+        "email": "damien.dekarz@permaculturetc.fr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-05T08:43:53.258Z",
+        "birthdate": null,
+        "address1": null,
+        "address2": null,
+        "zip_code": null,
+        "city": null,
+        "country": null,
+        "mobile_phone": null,
+        "additional_information": null,
+        "picture": "profile_pics/default-user-avatar.png",
+        "is_supplier": true,
+        "is_manager": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "userauth.supplieruser",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "brand_name": "Mister Potato Head"
+    }
+},
+{
+    "model": "userauth.supplieruser",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "brand_name": "La ferme du Bec Hellouin"
+    }
+},
+{
+    "model": "userauth.supplieruser",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "brand_name": "Permaculture, Agro\u00e9cologie etc."
+    }
+}
+]
