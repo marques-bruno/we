@@ -111,6 +111,9 @@ class ProductCardBlock(blocks.StructBlock):
 
     max_cards = blocks.IntegerBlock(max_value=6, help_text=tr("Number of cards to display on the page section (max. 6)"))
 
+    btn_text = blocks.CharBlock(max_length=30)
+    btn_url = blocks.CharBlock(max_length=30, default="products")
+
     def sort_no_sort(self, products):
         return products
 

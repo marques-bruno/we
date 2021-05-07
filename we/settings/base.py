@@ -64,6 +64,7 @@ INSTALLED_APPS = [
 
     'wagtailfontawesome',
 
+    'sorl.thumbnail',
     'widget_tweaks',
     'userauth',
     'userprofile',

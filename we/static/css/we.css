@@ -94,6 +94,7 @@
 .cta-input {
   opacity: 0.9;
   min-height: 70px;
+  line-height: 2.0;
   font-size: x-large !important;
   -webkit-appearance: none;
 }
@@ -133,6 +134,10 @@ select.text-center {
   font-size: 16px;
 }
 
+.card-img {
+  object-fit: cover;
+}
+
 .card-overlay {
   position: relative;
 }
@@ -144,7 +149,7 @@ select.text-center {
     left: 0px;
     right: 0px;
     background-color: #DDD;
-    opacity: 0.7;
+    opacity: 1.0;
     color: black;
     font-size: 17px;
   }
@@ -163,6 +168,49 @@ select.text-center {
   font-size: 17px;
 }
 
+/* Zoom effect on product images */
+
+/* [1] The container */
+.img-hover-zoom {
+  height: 300px; /* [1.1] Set it as per your need */
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img {
+  transition: transform .2s, visibility .2s ease-in;}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img {
+  transform: scale(1.5);
+}
+/* ----------------------------- */
+
+/* bloc replacements on hover */
+.bloc,
+.hovered_bloc {
+  text-align: center;
+}
+
+.bloc {
+  display: block;
+}
+
+.hovered_bloc {
+  display: none;
+}
+
+
+.bloc-wrapper:hover .bloc {
+  display: none !important;
+}
+
+.bloc-wrapper:hover .hovered_bloc {
+  display: block !important;
+}
+/* ----------------------------- */
+
+
 .bg-footer-top {
   background-color: #677949;
 }
@@ -170,3 +218,15 @@ select.text-center {
 .bg-footer-bottom {
   background-color: #748F47;
 }
+
+.message-wrapper {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+}
+
+.rounded-circle {
+  width: 40px;
+  height: 40px;
+}
+

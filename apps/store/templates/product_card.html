@@ -1,0 +1,30 @@
+{% load static thumbnail wagtailcore_tags %}
+
+{% comment %}
+    {% include "streams/product_card.html" %}
+    product: a Product object to display
+{% endcomment %}
+<div class="card border-0 img-hover-zoom bloc-wrapper">
+    <h5 class="card-title text-center p-0 m-0 bg-secondary">{{ product.name }}</h5>
+    <p class="card-subtitle text-center p-0 m-0 bg-secondary">{{ product.supplier }} ({{product.quantity_per_unit}}{{ product.unit.short_name }})</p>
+    <div class="card-text">
+        <p class="text-center m-1">{{ product.description|richtext }}</p>
+    </div>
+    <div class="card-body p-0 card-overlay text-center  d-flex align-self-stretch">
+        <div class="embed-responsive embed-responsive-16by9">
+            {% thumbnail product.image "600x500" crop="center" as im %}
+                <img class="card-img embed-responsive-item" src="{{ im.url }}" alt="{{ product.image.alt }}"/>
+            {% endthumbnail %}
+        </div>
+        <div class="card-content-overlay bloc d-flex justify-content-center" style="height: 50px;">
+            <p class="text-center m-0 text-black align-self-center">{{ product.price }}€/kg</p>
+        </div>
+        <div class="card-content-overlay hovered_bloc justify-content-center">
+            <p class="text-center m-0 text-black d-flex justify-content-around" style="height: 50px;">
+                <a href="{{ product.get_absolute_url }}" class="btn btn-success rounded-circle align-self-center"><i class="fa fa-bars"></i></a>
+                <a href="{{ product.get_add_to_cart_url_next }}?next={{ request.path|urlencode }}" class="btn btn-success rounded-circle align-self-center"><i class="fa fa-shopping-cart" style="margin-left: -3px;"></i></a>
+                <a href="#" class="btn btn-success rounded-circle align-self-center"><i class="fa fa-heart" style="margin-top: 5px;"></i></a>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load thumbnail wagtailcore_tags%}
+
+{% block content %}
+<div class="row vh-100 w-100 align-items-center" id="section" style="background-color: #1a1e21;">
+    <div class="container-fluid" style="margin-top: 100px; background-color: #1a1e21;">
+        <div class="card" style="background-color: #1a1e21;">
+            <div class="row"  style="background-color: #1a1e21;">
+                <div class="col-sm-5" style="background-color: #1a1e21;">
+                    <div>
+                        <div>
+                            {% thumbnail object.image "600x400" crop="center" as im %}
+                                <img class="card-img embed-responsive-item" src="{{ im.url }}" alt="{{ product.image.alt }}"/>
+                            {% endthumbnail %}
+                        </div>
+                    </div> <!-- slider-product.// -->
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body p-5 text-light" style="background-color: #1a1e21 !important;">
+                        <h3 class="title mb-3">{{object.name}}</h3>
+
+                        <p class="price-detail-wrap"> 
+                            <span class="price h3 text-warning"> 
+                                <span class="num">{{object.price}}<span class="currency">€</span></span>
+                            </span> 
+                            <span>/{{object.unit.short_name}}</span> 
+                        </p> <!-- price-detail-wrap .// -->
+                        <dl class="item-property">
+                        <dt>Description</dt>
+                        <dd>{{object.description|richtext}}</dd>
+                        <dt>Farmer's advice</dt>
+                        <dd>{{object.farmers_advice|richtext}}</dd>
+                        </dl>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <dl class="param param-feature">
+                                <dt>Allergens</dt>
+                                <ul>
+                                    {% for allergen in object.allergens.all %}
+                                    <li>{{allergen}}</li>
+                                    {% endfor %}
+                                </ul>
+                                </dl>  <!-- item-property-hor .// -->
+                            </div>
+                            <div class="col-sm-5">
+                                <dl class="param param-feature">
+                                <dt>Labels</dt>
+                                <ul>
+                                    {% for lbl in object.labels.all %}
+                                    <li>{{lbl}}</li>
+                                    {% endfor %}
+                                </ul>
+                                </dl>  <!-- item-property-hor .// -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <dl class="param param-inline">
+                                <dt>Quantity: </dt>
+                                <dd>
+                                    <select class="form-control form-control-sm" style="width:70px;">
+                                        <option> 1 </option>
+                                        <option> 2 </option>
+                                        <option> 3 </option>
+                                    </select>
+                                </dd>
+                                </dl>  <!-- item-property .// -->
+                            </div> <!-- col.// -->
+                            <div class="col-sm-7">
+                                <dl class="param param-inline">
+                                    <dt>Size: </dt>
+                                    <dd>
+                                        <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <span class="form-check-label">SM</span>
+                                        </label>
+                                        <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <span class="form-check-label">MD</span>
+                                        </label>
+                                        <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                        <span class="form-check-label">XXL</span>
+                                        </label>
+                                    </dd>
+                                </dl>  <!-- item-property .// -->
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr>
+                        <a href="{{ product.get_add_to_cart_url }}" class="btn btn-lg btn-success"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+                    </div> <!-- card-body.// -->
+                </div> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+
+    </div>
+</div>
+{% endblock %}
