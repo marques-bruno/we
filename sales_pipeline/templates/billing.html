@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container text-light" style="padding-top: 100px;">
+      <div class="pt-5 text-center">
+        <h2>Billing info</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <span class="badge badge-secondary badge-pill">3</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-success">
+              <div>
+                <h6 class="my-0">Product name</h6>
+                <small class="text-muted">Brief description</small>
+              </div>
+              <span class="text-muted">$12</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-success">
+              <div>
+                <h6 class="my-0">Second product</h6>
+                <small class="text-muted">Brief description</small>
+              </div>
+              <span class="text-muted">$8</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-success">
+              <div>
+                <h6 class="my-0">Third item</h6>
+                <small class="text-muted">Brief description</small>
+              </div>
+              <span class="text-muted">$5</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text-success ">
+                <h6 class="my-0">Promo code</h6>
+                <small>EXAMPLECODE</small>
+              </div>
+              <span class="text-success">-$5</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between bg-success">
+              <span>Total (USD)</span>
+              <strong>$20</strong>
+            </li>
+          </ul>
+
+          <form class="card p-2 bg-success">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Promo code">
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-secondary">Redeem</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-8 order-md-1 ">
+          <h4 class="mb-3">Billing address</h4>
+          
+          <form class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="row px-0">
+              <div class="col-md-6 mb-3 pl-0">
+                {% with field=form.first_name placeholder=request.user.first_name field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+              <div class="col-md-6 mb-3 pr-0">
+                {% with field=form.last_name placeholder=request.user.last_name field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+            </div>
+            <div class="mb-3">
+                {% with field=form.address1 placeholder=request.user.address1 field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+
+            <div class="mb-3">
+                {% with field=form.address2 placeholder=request.user.address2 field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+
+            <div class="row">
+              <div class="col-md-5 mb-3 pl-0">
+                {% with field=form.country placeholder=request.user.country field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+              <div class="col-md-4 mb-3">
+                {% with field=form.city placeholder=request.user.city field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+              <div class="col-md-3 mb-3 pr-0">
+                {% with field=form.zip_code placeholder=request.user.zip_code field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mb-3 px-0">
+                {% with field=form.additional_information placeholder=request.user.additional_information field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+              </div>
+            </div>
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                {% with field=form.is_primary field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-success btn-lg btn-block mb-5" type="submit">Continue to checkout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

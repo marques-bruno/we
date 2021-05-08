@@ -6,9 +6,8 @@ from django_countries.fields import CountryField
 from django.conf import settings
 from django.template.defaulttags import register
 
-class User(AbstractUser):
-
-    birthdate = models.DateField(verbose_name=tr("Date of birth"), blank=True, null=True)
+class Address(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
     address1 = models.CharField(verbose_name=tr("Address line 1"), max_length=250, blank=True, null=True)
     address2 = models.CharField(verbose_name=tr("Address line 2"), max_length=250, blank=True, null=True)
     zip_code = models.CharField(verbose_name=tr("Postal Code"), max_length=12, blank=True, null=True)
@@ -16,18 +15,71 @@ class User(AbstractUser):
     country = CountryField(blank=True, null=True)
     phone_regex = RegexValidator(regex=r"^\+(?:[0-9]●?){6,14}[0-9]$", message=tr("Enter a valid international mobile phone number starting with +(country code)"))
     mobile_phone = models.CharField(validators=[phone_regex], verbose_name=tr("Mobile phone"), max_length=17, blank=True, null=True)
+    phone = models.CharField(validators=[phone_regex], verbose_name=tr("Phone"), max_length=17, blank=True, null=True)
     additional_information = models.CharField(verbose_name=tr("Additional information"), max_length=4096, blank=True, null=True)
+    is_primary = models.BooleanField(verbose_name=tr("Primary address"), blank=True, null=True)
+
+class User(AbstractUser):
+
+    birthdate = models.DateField(verbose_name=tr("Date of birth"), blank=True, null=True)
     picture = models.ImageField(verbose_name=tr("Profile Picture"), upload_to='profile_pics/', default='profile_pics/default-user-avatar.png')
 
     is_supplier = models.BooleanField(blank=False, default=False)
     is_manager = models.BooleanField(blank=False, default=False)
 
     class Meta:
-        ordering = ['last_name']
-
-    class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
+
+    @property
+    def get_addresses(self):
+        return Address.objects.filter(user=self)
+
+    @property
+    def get_address_primary(self):
+        return Address.objects.filter(user=self, is_primary=True)[0]
+
+
+    @property
+    def first_name(self):
+        return self.user.get_address_primary.first_name
+
+    @property
+    def last_name(self):
+        return self.user.get_address_primary.last_name
+
+    @property
+    def address1(self):
+        return self.user.get_address_primary.address1
+
+    @property
+    def address2(self):
+        return self.user.get_address_primary.address2
+
+    @property
+    def city(self):
+        return self.user.get_address_primary.city
+
+    @property
+    def zip_code(self):
+        return self.user.get_address_primary.zip_code
+
+    @property
+    def country(self):
+        return self.user.get_address_primary.country
+
+    @property
+    def mobile_phone(self):
+        return self.user.get_address_primary.mobile_phone
+
+    @property
+    def phone(self):
+        return self.user.get_address_primary.phone
+
+    @property
+    def additional_information(self):
+        return self.user.get_address_primary.additional_information
+
 
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
@@ -45,6 +97,14 @@ class CustomerUser(models.Model):
         return self.user.email
     email.short_description = 'Email'
 
+    def birthdate(self):
+        return self.user.birthdate
+    birthdate.short_description = 'Birth date'
+
+    def picture(self):
+        return self.user.picture
+    picture.short_description = 'avatar'
+
     def first_name(self):
         return self.user.first_name
     first_name.short_description = 'First name'
@@ -52,10 +112,6 @@ class CustomerUser(models.Model):
     def last_name(self):
         return self.user.last_name
     last_name.short_description = 'Last name'
-
-    def birthdate(self):
-        return self.user.birthdate
-    birthdate.short_description = 'Birth date'
 
     def address1(self):
         return self.user.address1
@@ -81,14 +137,15 @@ class CustomerUser(models.Model):
         return self.user.mobile_phone
     mobile_phone.short_description = 'Mobile phone'
 
+    def phone(self):
+        return self.user.phone
+    mobile_phone.short_description = 'Phone'
+
     def additional_information(self):
         return self.user.additional_information
     additional_information.short_description = 'Additional information'
 
-    def picture(self):
-        return self.user.picture
-    picture.short_description = 'avatar'
-
+ 
     def __str__(self):
         return f"{self.username}: {self.first_name} {self.last_name}"
 
@@ -109,6 +166,14 @@ class SupplierUser(models.Model):
         return self.user.email
     email.short_description = 'Email'
 
+    def birthdate(self):
+        return self.user.birthdate
+    birthdate.short_description = 'Birth date'
+
+    def picture(self):
+        return self.user.picture
+    picture.short_description = 'avatar'
+
     def first_name(self):
         return self.user.first_name
     first_name.short_description = 'First name'
@@ -116,10 +181,6 @@ class SupplierUser(models.Model):
     def last_name(self):
         return self.user.last_name
     last_name.short_description = 'Last name'
-
-    def birthdate(self):
-        return self.user.birthdate
-    birthdate.short_description = 'Birth date'
 
     def address1(self):
         return self.user.address1
@@ -145,14 +206,15 @@ class SupplierUser(models.Model):
         return self.user.mobile_phone
     mobile_phone.short_description = 'Mobile phone'
 
+    def phone(self):
+        return self.user.phone
+    mobile_phone.short_description = 'Phone'
+
     def additional_information(self):
         return self.user.additional_information
     additional_information.short_description = 'Additional information'
 
-    def picture(self):
-        return self.user.picture
-    picture.short_description = 'avatar'
-
+ 
     def __str__(self):
         return self.brand_name
 
@@ -172,6 +234,14 @@ class ManagerUser(models.Model):
         return self.user.email
     email.short_description = 'Email'
 
+    def birthdate(self):
+        return self.user.birthdate
+    birthdate.short_description = 'Birth date'
+
+    def picture(self):
+        return self.user.picture
+    picture.short_description = 'avatar'
+
     def first_name(self):
         return self.user.first_name
     first_name.short_description = 'First name'
@@ -179,10 +249,6 @@ class ManagerUser(models.Model):
     def last_name(self):
         return self.user.last_name
     last_name.short_description = 'Last name'
-
-    def birthdate(self):
-        return self.user.birthdate
-    birthdate.short_description = 'Birth date'
 
     def address1(self):
         return self.user.address1
@@ -208,15 +274,15 @@ class ManagerUser(models.Model):
         return self.user.mobile_phone
     mobile_phone.short_description = 'Mobile phone'
 
+    def phone(self):
+        return self.user.phone
+    mobile_phone.short_description = 'Phone'
+
     def additional_information(self):
         return self.user.additional_information
     additional_information.short_description = 'Additional information'
 
-    def picture(self):
-        return self.user.picture
-    picture.short_description = 'avatar'
-
-
+ 
     def __str__(self):
         return f"{self.user.username}: {self.user.first_name} {self.user.last_name}"
 

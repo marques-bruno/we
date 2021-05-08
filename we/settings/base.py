@@ -69,9 +69,11 @@ INSTALLED_APPS = [
     'userauth',
     'userprofile',
     'store',
+    'sales_pipeline',
     'streams',
 
     'wagtailuiplus',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

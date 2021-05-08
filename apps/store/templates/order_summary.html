@@ -37,7 +37,7 @@
             </tr>
             <tr>
               <th colspan="5" scope="row">
-                <a class="btn btn-warning float-right mx-2" href="/products/">Continue Shopping</a>
+                <a class="btn btn-warning float-right mx-2" href="{% url 'store:product_list' %}">Continue Shopping</a>
             </tr>
           {% endfor %}
           {% if order.get_cart_total %}
@@ -48,8 +48,8 @@
             </tr>
             <tr>
               <th colspan="5" scope="row">
-                <a class="btn btn-warning float-right mx-2" href="/products/">Continue Shopping</a>
-                <a class="btn btn-success float-right " href="/checkout/">Proceed to checkout</a></th>
+                <a class="btn btn-warning float-right mx-2" href="{% url 'store:product_list' %}">Continue Shopping</a>
+                <a class="btn btn-success float-right " href="{% url 'sales_pipeline:billing' %}">Proceed to checkout</a></th>
             </tr>
           {% endif %}
           </tbody>

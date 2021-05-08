@@ -34,6 +34,7 @@ if settings.DEBUG:
 
 urlpatterns = urlpatterns + [
     path('', include('store.urls', namespace="store")),
+    path('', include('sales_pipeline.urls', namespace="sales_pipeline")),
     path('', include('userauth.urls')),
     path('', include('userprofile.urls')),
     path('', include('allauth.urls')),
