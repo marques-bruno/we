@@ -11,11 +11,11 @@ from django.shortcuts import redirect
 
 @login_required
 def profile_view(request):
-        return redirect('account_dashboard')
+        return redirect('account_dashboard', pk=request.user.pk)
 
 
 @login_required
-def account_dashboard_view(request):
+def account_dashboard_view(request, pk=0):
     return render(request, 'userprofile/account/account_dashboard.html')
 
 
@@ -29,7 +29,7 @@ account_update_view = login_required(AccountUpdateView.as_view())
 
 
 @login_required
-def account_message_board_view(request):
+def account_message_board_view(request, pk=0):
     return render(request, 'userprofile/account/account_message_board.html')
 
 

@@ -14,6 +14,7 @@ register = template.Library()
 #     what, to = arg.split('|')
 #     return value.replace(what, to)
 
+# @todo: this isn't the right way, let's find a better one
 @register.filter
 def replace_pk(value, arg):
     """

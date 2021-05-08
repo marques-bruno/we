@@ -23,11 +23,9 @@
             <div class="col-md-3 ">
                 <div class="list-group ">
                 {% for item in menuitems.menu_items.all %}
-                    {% with var=item.url|replace_pk:request.user.pk %}
-                    <a href="{{ var }}" class="list-group-item list-group-item-action {% if var == request.path %}active{% endif %}">
+                    <a href="{% url item.url request.user.pk%}" class="list-group-item list-group-item-action {% if var == request.path %}active{% endif %}">
                         {{item.title}}
                     </a>
-                    {% endwith %}
                 {% endfor %}
                 </div> 
             </div>

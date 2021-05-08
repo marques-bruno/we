@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags%}
+
+
+{% block content %}
+<div class="row w-100 pt-5">
+    <div class="container pt-5">
+      <div class="col-md-12 text-light p-5">
+        <h2 class="pt-5">Order Summary</h2>
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 10%">#</th>
+              <th scope="col" style="width: 50%">Item name</th>
+              <th scope="col" style="width: 10%">Price</th>
+              <th scope="col" style="width: 10%">Quantity</th>
+              <th scope="col" style="width: 10%">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for order_item in order.get_items %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{order_item.product.name}}</td>
+              <td>{{order_item.product.price}}</td>
+              <td>{% if order_item.quantity %}<a href="{% url 'store:remove_single_item_from_cart' order_item.product.slug %}"><i class="fas fa-minus mr-2 " style="color: #748F47;" ></i></a> {% endif %}{{order_item.quantity}} <a href="{% url 'store:add_single_item_from_cart' order_item.product.slug %}"><i class="fas fa-plus ml-2" style="color: #748F47;" ></i></a></td>
+              <td>{{order_item.get_total}} <a href="{% url 'store:remove_from_cart' order_item.product.slug %}"><i class="fas fa-trash mr-2 float-right" style="color: #748F47;" ></i></a></td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5">Your cart is empty.</td>
+            </tr>
+            <tr>
+              <th colspan="3" scope="row"></th>
+              <th scope="row"><b>Total:</b></th>
+              <td><b>0</b></td>
+            </tr>
+            <tr>
+              <th colspan="5" scope="row">
+                <a class="btn btn-warning float-right mx-2" href="/products/">Continue Shopping</a>
+            </tr>
+          {% endfor %}
+          {% if order.get_cart_total %}
+            <tr>
+              <th colspan="3" scope="row"></th>
+              <th scope="row"><b>Total:</b></th>
+              <td><b>{{order.get_cart_total}}</b></td>
+            </tr>
+            <tr>
+              <th colspan="5" scope="row">
+                <a class="btn btn-warning float-right mx-2" href="/products/">Continue Shopping</a>
+                <a class="btn btn-success float-right " href="/checkout/">Proceed to checkout</a></th>
+            </tr>
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
+{% endblock content %}

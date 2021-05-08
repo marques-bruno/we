@@ -1,4 +1,3 @@
-
 * {
   border-radius: 0 !important;
   font-family: 'Rosario', sans-serif;
@@ -99,7 +98,8 @@
   -webkit-appearance: none;
 }
 
-.success,.btn-success{
+
+.success,.btn-success {
   background-color: #748F47 !important;
   opacity: 1
 }
@@ -229,4 +229,3 @@ select.text-center {
   width: 40px;
   height: 40px;
 }
-
