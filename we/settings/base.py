@@ -74,6 +74,10 @@ INSTALLED_APPS = [
 
     'wagtailuiplus',
     'crispy_forms',
+
+    # rest API stuff:
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +91,8 @@ MIDDLEWARE = [
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'we.urls'
@@ -181,6 +187,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000'
+]
 
 # Wagtail settings
 
