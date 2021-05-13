@@ -10485,7 +10485,7 @@ textarea.form-control-lg {
   }
 }
 .is-valid {
-  border-color: lime !important;
+  border-color: limegreen !important;
 }
 
 .is-invalid {
@@ -10493,8 +10493,8 @@ textarea.form-control-lg {
 }
 
 .is-valid:focus {
-  border-color: lime;
-  outline-color: rgba(0, 255, 0, 0.4);
+  border-color: limegreen;
+  outline-color: rgba(50, 205, 50, 0.4);
 }
 
 .is-invalid:focus {
@@ -10529,10 +10529,6 @@ select.form-control {
   background-repeat: no-repeat;
   background-position: calc(100% - 7px) 50%;
   margin-bottom: 5px;
-}
-
-.custom-select {
-  background-color: transparent !important;
 }
 
 .custom-select > select {
