@@ -1,6 +1,23 @@
 from .forms import CustomerSignupForm, SupplierSignupForm, ManagerSignupForm
 from allauth.account.views import SignupView
 
+
+###################### REST FRAMEWORK ModelView sets ######################
+
+
+from rest_framework import viewsets
+from .serializers import AddressSerializer
+from .models import Address
+
+
+class AddressView(viewsets.ModelViewSet):
+    serializer_class = AddressSerializer
+    queryset = Address.objects.all()
+
+###########################################################################
+
+
+
 class CustomerUserSignupView(SignupView):
     # The referenced HTML content can be copied from the signup.html
     # in the django-allauth template folder
@@ -47,3 +64,4 @@ class ManagerUserSignupView(SignupView):
 
 # # Create the view (we will reference to it in the url patterns)
 manager_signup = ManagerUserSignupView.as_view()
+

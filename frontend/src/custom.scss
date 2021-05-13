@@ -40,7 +40,7 @@ $font-family-sans-serif: 'Rosario', system-ui, -apple-system, "Segoe UI", Roboto
 $input-color: #495057 !default;
 $input-height-base: 35px;
 
-@import "node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 .is-valid {
   border-color: limegreen !important;

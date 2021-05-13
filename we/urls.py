@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.conf.urls import include, url
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -17,6 +17,7 @@ urlpatterns = [
 
     url(r'^search/$', search_views.search, name='search'),
 
+    
 ]
 
 
