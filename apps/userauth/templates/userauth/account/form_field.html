@@ -4,7 +4,7 @@
 
 {% if form.is_bound %}
     {% if field.errors or form.non_field_errors %}
-        {% render_field field|append_attr:"readonly:readonly" value=default class="form-control is-invalid" %}
+        {% render_field field value=default class="form-control is-invalid" %}
         <div class="invalid-feedback">
             {{ form.non_field_errors }}
             {{ field.errors }}
@@ -14,10 +14,10 @@
     {% endif %}
 {% else %}
     {% with "form-control input-field-"|add:field.name as field_class %}
-    {% if readonly %}
-        {% render_field field|append_attr:"readonly:readonly" value=default class=field_class %}
-    {% else %}
-        {% render_field field value=default class=field_class %}
-    {% endif %}
+        {% if readonly %}
+            {% render_field field|append_attr:"readonly:readonly" value=default class=field_class %}
+        {% else %}
+            {% render_field field value=default class=field_class %}
+        {% endif %}
     {% endwith %}
 {% endif %}

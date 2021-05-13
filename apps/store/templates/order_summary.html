@@ -49,7 +49,7 @@
             <tr>
               <th colspan="5" scope="row">
                 <a class="btn btn-warning float-right mx-2" href="{% url 'store:product_list' %}">Continue Shopping</a>
-                <a class="btn btn-success float-right " href="{% url 'sales_pipeline:billing' %}">Proceed to checkout</a></th>
+                <a class="btn btn-success float-right " href="{% if request.user.has_address %}{% url 'sales_pipeline:billing' %}{% else %}{% url 'sales_pipeline:address' %}{% endif %}">Proceed to checkout</a></th>
             </tr>
           {% endif %}
           </tbody>

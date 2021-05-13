@@ -4,9 +4,10 @@
 <div class="row vh-100 align-items-center" id="section" style="background-image: url({{ img.url }})">
     <div class="container">
         <form action="to_selected_pickup" method="POST">
-        <div class="row justify-content-md-center input-group">
-                <select class="custom-select text-center cta-input" id="inputGroupSelect04">
-                    <option class="cta-input" disabled selected hidden>{{self.title}}</option>
+        <div class="row justify-content-md-center">
+            <div class="custom-select p-0">    
+                <select class="form-control text-center cta-input" id="inputGroupSelect04">
+                    <option class="cta-input" selected hidden>{{self.title}}</option>
                     {% if pickup_points|length %}
                         {% for pickup in pickup_points %}
                             <option class="cta-input">{{pickup.name}} - {{pickup.address}}</option>
@@ -15,6 +16,7 @@
                     <option class="cta-input" disabled>------------</option>
                     {% endif %}
                 </select>
+            </div>
             <div class="input-group-append">
                 <button class="btn btn-success cta-input" type="submit">{{self.button_text}}</button>
             </div>

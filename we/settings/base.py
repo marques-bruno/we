@@ -196,7 +196,7 @@ AUTH_USER_MODEL = 'userauth.User'
 # Adding necessary forms, with custom fields, for Wagtail's admin backend
 WAGTAIL_USER_CREATION_FORM = 'userauth.forms.WagtailUserCreationForm'
 WAGTAIL_USER_EDIT_FORM = 'userauth.forms.WagtailUserEditForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['birthdate', 'address1', 'address2', 'zip_code', 'city', 'country', 'mobile_phone', 'additional_information', 'picture',]
+WAGTAIL_USER_CUSTOM_FIELDS = ['birthdate', 'picture', 'is_supplier', 'is_manager']
 
 # Authentication backends for django-allauth
 AUTHENTICATION_BACKENDS = [

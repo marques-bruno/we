@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 class UserUpdateForm(ModelForm):
     class Meta:
-        user = User
-        fields = ['username', 'email', 'birthdate', 'picture', 'address', 'is_supplier', 'is_manager']
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'birthdate', 'picture']
         widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
 

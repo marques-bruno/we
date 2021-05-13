@@ -14,7 +14,6 @@ class ProductAdmin(ModelAdmin):
   add_to_settings_menu = False
   exclude_from_explorer = True
   list_display = ('name', 'product_supplier', 'price', 'quantity', 'type', 'labels', 'allergens')
-  # list_filter = ('name', 'product_supplier', 'price', 'quantity', 'type', 'labels', 'allergens')
   search_fields = ('name', 'product_supplier', 'quantity', 'type', 'labels', 'allergens')
 
   def product_supplier(self, obj):
@@ -32,9 +31,8 @@ class SupplierAdmin(ModelAdmin):
   menu_order = 290
   add_to_settings_menu = False
   exclude_from_explorer = True
-  list_display = ("brand_name", "username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
-  # list_filter = ("first_name", "last_name", "city", "zip_code", "country")
-  search_fields = ("brand_name", "username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
+  list_display = ("brand_name", "username", "email")
+  search_fields = ("brand_name", "username", "email")
 
   empty_value_display = 'N/A'
 
@@ -48,9 +46,8 @@ class ManagerAdmin(ModelAdmin):
   menu_order = 290
   add_to_settings_menu = False
   exclude_from_explorer = True
-  list_display = ("username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
-  # list_filter = ("first_name", "last_name", "city", "zip_code", "country")
-  search_fields = ("username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
+  list_display = ("username", "email")
+  search_fields = ("username", "email")
 
   empty_value_display = 'N/A'
 
@@ -64,9 +61,9 @@ class CustomerAdmin(ModelAdmin):
   menu_order = 290
   add_to_settings_menu = False
   exclude_from_explorer = True
-  list_display = ("username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
+  list_display = ("username", "email")
   # list_filter = ("first_name", "last_name", "city", "zip_code", "country")
-  search_fields = ("username", "email", "first_name", "last_name", "mobile_phone", "address1", "city", "zip_code", "country")
+  search_fields = ("username", "email")
 
   empty_value_display = 'N/A'
 

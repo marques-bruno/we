@@ -1,22 +1,15 @@
 from django.db import models
 
-from userauth.models import User
+from userauth.models import User, Address
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     date_started = models.DateTimeField(auto_now_add=True)
     date_ordered = models.DateTimeField(null=True, blank=True)
     complete = models.BooleanField(default=False)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
+    customer_message = models.TextField(null=True, blank=True)
     transaction_id = models.CharField(max_length=100, null=True)
-
-    @property
-    def shipping(self):
-        shipping = False
-        orderitems = self.orderitem_set.all()
-        for i in orderitems:
-            if i.product.digital == False:
-                shipping = True
-        return shipping
 
     @property
     def get_items(self):
