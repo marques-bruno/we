@@ -152,8 +152,7 @@ class ProductCardBlock(blocks.StructBlock):
     #     ## @Todo: Filtering products from a customer's past orders is a bit more complicated, let's keep it for later
     #     return {v for v in products if v.type == ctx['self']['filters']['by_past_orders']}
         
-
-
+        
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         ret = store_models.Product.objects.all()

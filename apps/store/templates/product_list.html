@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="row pt-5 h-100 w-100 align-items-center" id="section" style="background-color: #1a1e21;">
-    <div class="container-fluid pt-5">
-        <div class="row justify-content-center">
+<div class="row pt-5 h-100 w-100" style="background-color: #1a1e21;">
+    <div class="container pt-5">
+        <div class="row">
             <h1 class="mb-sm-5 text-center text-light">Here's our selection of products</h1>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-sm-12">
+        <div class="row justify-content-md-center">
+            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12">
                 <div class="row justify-content-center">
                     {% for product in products %}
                     <div class="col-lg-4 col-sm-12 card-deck mb-5">
@@ -23,4 +24,5 @@
 </div>
 
 {% endblock content %}
+
 

@@ -4,6 +4,7 @@ from django.views.generic import View, UpdateView, CreateView, FormView
 from django.urls import reverse_lazy
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.core import serializers
 
 from .forms import AddressForm, BillingForm
 from userauth.models import Address
@@ -57,8 +58,8 @@ class BillingView(FormView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(FormView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
         context['addrs'] = Address.objects.filter(user=context['view'].request.user)
+        context['json_addrs'] = serializers.serialize('json', Address.objects.filter(user=context['view'].request.user).all())
         return context
         
     def get_form(self, form_class=None):
@@ -71,7 +72,7 @@ class BillingView(FormView):
         form.fields['address'].queryset = Address.objects.filter(user=self.request.user)
         return form
 
-    def post(self, *args, **kwargs):            
+    def post(self, *args, **kwargs):
         form = BillingForm(self.request.POST or None)
         if form.is_valid():
             if self.request.POST.get('submit', '') == 'update_addr':
@@ -85,11 +86,9 @@ class BillingView(FormView):
                 order.customer_message = form.cleaned_data['customer_message']
                 order.save()
             return redirect('sales_pipeline:payment')
-            messages.warning(self.request, 'oups, something went wrong')
+        else:
+            print(self.request.POST)            
+            messages.warning(self.request, 'oups, something went wrong: invalid form')
             return redirect('/')
-
-        print(self.request.POST)            
-        messages.warning(self.request, 'oups, something went wrong: invalid form')
-        return redirect('/')
 
 billing_view = login_required(BillingView.as_view())

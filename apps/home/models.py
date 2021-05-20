@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import CharField
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
@@ -10,6 +11,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.images.models import Image
 
+from wagtail.api import APIField
 from streams import blocks
 
 
@@ -17,7 +19,6 @@ class HomePage(Page):
     parent_page_types = ["wagtailcore.Page"]
     max_count = 1
 
-            
     standard = StreamField([
         ("title_and_text", blocks.TitleAndTextBlock()),
         ("richtext", blocks.RichtextBlock()),
@@ -36,6 +37,10 @@ class HomePage(Page):
         StreamFieldPanel("sections"),
     ]
 
+    api_fields = [
+        APIField("standard"),
+        APIField("sections"),
+    ]
 
 
 @register_setting

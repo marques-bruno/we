@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags%}
+{% load static wagtailcore_tags%}
 
 
 {% block content %}
@@ -19,12 +19,27 @@
           </thead>
           <tbody>
           {% for order_item in order.get_items %}
-            <tr>
+            <tr id="{{order_item.product.slug}}_line">
+              
               <th scope="row">{{forloop.counter}}</th>
               <td>{{order_item.product.name}}</td>
               <td>{{order_item.product.price}}</td>
-              <td>{% if order_item.quantity %}<a href="{% url 'store:remove_single_item_from_cart' order_item.product.slug %}"><i class="fas fa-minus mr-2 " style="color: #748F47;" ></i></a> {% endif %}{{order_item.quantity}} <a href="{% url 'store:add_single_item_from_cart' order_item.product.slug %}"><i class="fas fa-plus ml-2" style="color: #748F47;" ></i></a></td>
-              <td>{{order_item.get_total}} <a href="{% url 'store:remove_from_cart' order_item.product.slug %}"><i class="fas fa-trash mr-2 float-right" style="color: #748F47;" ></i></a></td>
+              <td>
+                {% if order_item.quantity %}
+                <button onclick="decrease_item('{{ order_item.product.slug }}')" class="btn rounded-circle">
+                  <i class="fas fa-minus mr-2 " style="color: #748F47;" ></i>
+                </button>
+                {% endif %}
+                <span id="{{order_item.product.slug}}_qtty">{{order_item.quantity}}</span>
+                <button onclick="increase_item('{{ order_item.product.slug }}')" class="btn rounded-circle">
+                  <i class="fas fa-plus ml-2" style="color: #748F47;" ></i>
+                </button>
+              </td>
+              <td>{{order_item.get_total}} 
+                <button onclick="remove_item('{{ order_item.product.slug }}')" class="btn rounded-circle">
+                  <i class="fas fa-trash mr-2 float-right" style="color: #748F47;" ></i>
+                </button>
+              </td>
             </tr>
           {% empty %}
             <tr>

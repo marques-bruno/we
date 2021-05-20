@@ -21,9 +21,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/we.css' %}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         {% comment %} Fontawesome Icon pack {% endcomment %}
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -57,7 +54,7 @@
                             <a class="nav-link" href="#">Contact us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Our blog</a>
+                            <a class="nav-link" href="/test-addresses/">Our blog</a>
                         </li>    
                     </ul>
                 </div>
@@ -74,7 +71,7 @@
                             <a class="nav-link btn btn-success" href="/order-summary/">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                                <span class="badge  badge-danger mr-1"> {{ request.user|cart_item_count }}  </span>
+                                <span class="badge badge-danger mr-1" id="cart-badge"> {{ request.user|cart_item_count }} </span>
                             </a>
                         </li>
                         {% endif %}
@@ -91,16 +88,16 @@
         </nav>
     {% endblock header %}
 
+    <div id="div_messages" class="message-wrapper" style="z-index: 1070; position: fixed; top: 100px;">
     {% if messages %}
-    <div class="message-wrapper" style="z-index: 1070;">
         {% for msg in messages %}
         <div class="alert alert-success alert-dismissible fade show" id="auto-fade" role='alert'>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{msg}}
         </div>
         {% endfor %}
-    </div>
     {% endif %}
+    </div>
 
     <main class="content">
         <div class="d-flex flex-flex-grow-1">
@@ -230,10 +227,97 @@
     </footer>
     {% endblock footer %}
     {# Global javascript #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{% static 'js/we.js' %}"></script>
 
-    {% block extra_js %}
+
+    <script>
+        function update_messages(messages){
+        $.each(messages, function (i, m) {
+            document.getElementById("div_messages").innerHTML = "<div class='alert alert-success alert-dismissible fade show' id='auto-fade' role='alert'>"
+            + "<button type='button' class='close' data-dismiss='alert'>&times;</button>"
+            + m.message + "</div>";
+        });
+    }
+
+    function update_cart_badge(n_items) {
+        console.log("cart-badge is zero?" + document.getElementById("cart-badge").innerHTML == "0")
+        console.log("n_items: " + n_items == 0)
+        if (document.getElementById("cart-badge").innerHTML != "0" && n_items == 0)
+            document.location.reload();
+        document.getElementById("cart-badge").innerHTML = n_items.toString();
+    }
+
+    function decrease_item(item_slug) {
+        $.ajax({
+            url: "{% url 'store:decrease_item' %}",
+            dataType: "json",
+            data: { slug: item_slug},
+            success: function (response) {
+                document.getElementById(item_slug + "_qtty").innerHTML = response.new_qtty.toString();
+                update_messages(response.messages);
+                if (response.new_qtty == 0)
+                update_cart_badge(response.n_items);
+            },
+            error: function (response) {
+                document.getElementById(item_slug + "_qtty").innerHTML = "#REF!";
+            }
+        });
+    }
+
+    function increase_item(item_slug) {
+        $.ajax({
+            url: "{% url 'store:increase_item' %}",
+            data: { 'slug': item_slug},
+            dataType: "json",
+            success: function (response) {
+                document.getElementById(item_slug + "_qtty").innerHTML = response.new_qtty.toString();
+                if (response.new_qtty == 0)
+                update_cart_badge(response.n_items);
+                update_messages(response.messages);
+            },
+            error: function (response) {
+                document.getElementById(item_slug + "_qtty").innerHTML = "#REF!";
+            }
+        });
+    }
+
+    function remove_item(item_slug) {
+        $.ajax({
+            url: "{% url 'store:remove_item' %}",
+            data: { 'slug': item_slug},
+            dataType: "json",
+            success: function (response) {
+                document.getElementById(item_slug + "_line").remove();
+                update_cart_badge(response.n_items);
+                update_messages(response.messages);
+            },
+            error: function (response) {
+                document.getElementById(item_slug + "_line").innerHTML = "#REF!";
+            }
+        });
+    }
+
+    function add_to_cart(item_slug) {
+        console.log("Add to cart: " + item_slug);
+        $.ajax({
+            url: "{% url 'store:add_to_cart' %}",
+            data: { 'slug': item_slug},
+            dataType: "json",
+            success: function (response) {
+                update_cart_badge(response.n_items);
+                update_messages(response.messages);
+            },
+            error: function (response) {
+                console.error("Meeeh add_to_cart error: " + response.error);
+            }
+        });
+    }
+    </script>
+    {% block javascript %}
         {# Override this in templates to add extra javascript #}
-    {% endblock %}
+    {% endblock javascript %}
     </body>
 </html>

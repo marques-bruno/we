@@ -88,12 +88,11 @@
                             </div> <!-- col.// -->
                         </div> <!-- row.// -->
                         <hr>
-                        <a href="{{ product.get_add_to_cart_url }}" class="btn btn-lg btn-success"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+                        <a onclick="add_to_cart('{{ order_item.product.slug }}')" class="btn btn-lg btn-success"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
                     </div> <!-- card-body.// -->
                 </div> <!-- col.// -->
             </div> <!-- row.// -->
         </div> <!-- card.// -->
-
     </div>
 </div>
 {% endblock %}

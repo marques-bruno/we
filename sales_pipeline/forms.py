@@ -14,7 +14,8 @@ class AddressForm(forms.ModelForm):
 class BillingForm(forms.Form):
     address = forms.ModelChoiceField(
         help_text=tr('Choose your billing address'), 
-        queryset=Address.objects.all(), initial=0)
+        queryset=Address.objects.all(), initial=0
+    )
     customer_message = forms.CharField(
         required=False,
         help_text=tr('Do you want to leave us a message about your order?'), 

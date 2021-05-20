@@ -66,16 +66,20 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'widget_tweaks',
+
     'userauth',
     'userprofile',
     'store',
     'sales_pipeline',
     'streams',
+    'frontend',
 
     'wagtailuiplus',
     'crispy_forms',
 
     # rest API stuff:
+    'wagtail.api.v2',
+
     'corsheaders',
     'rest_framework',
 ]

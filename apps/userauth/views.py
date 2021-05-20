@@ -6,13 +6,29 @@ from allauth.account.views import SignupView
 
 
 from rest_framework import viewsets
-from .serializers import AddressSerializer
-from .models import Address
+from .serializers import AddressSerializer, CustomerSerializer, ManagerSerializer, SupplierSerializer, UserSerializer
+from .models import Address, CustomerUser, ManagerUser, SupplierUser, User
 
 
 class AddressView(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
+
+class UserView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+class CustomerView(viewsets.ModelViewSet):
+    serializer_class = CustomerSerializer
+    queryset = CustomerUser.objects.all()
+
+class SupplierView(viewsets.ModelViewSet):
+    serializer_class = SupplierSerializer
+    queryset = SupplierUser.objects.all()
+
+class ManagerView(viewsets.ModelViewSet):
+    serializer_class = ManagerSerializer
+    queryset = ManagerUser.objects.all()
 
 ###########################################################################
 
