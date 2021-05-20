@@ -23,8 +23,8 @@ class CustomerSignupForm(SignupForm):
     ## the OneToOneField to User
     ## (N.B: do NOT try to declare Meta class with model=CustomerUser,
     ## it won't work!)
-    first_name = forms.CharField(max_length=30, label=tr("First name"))
-    last_name = forms.CharField(max_length=30, label=tr("Last name"))
+    first_name = forms.CharField(label=tr('First name'), max_length=30)
+    last_name = forms.CharField(label=tr('Last name'), max_length=150)
 
     ## Call SignupForm.__init__ to make sure you get the extra password fields:
     def __init__(self, *args, **kwargs):
@@ -38,9 +38,9 @@ class CustomerSignupForm(SignupForm):
     def save(self, request):
         ## Save the User instance and get a reference to it
         user = super(CustomerSignupForm, self).save(request)
-
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
+
         user.is_supplier = False
         user.is_manager = False
 
@@ -70,8 +70,9 @@ class SupplierSignupForm(SignupForm):
     ## (N.B: do NOT try to declare Meta class with model=SupplierUser,
     ## it won't work!) ex:
     brand_name = forms.CharField(max_length=100, label=tr("Brand name"))
-    first_name = forms.CharField(max_length=30, label=tr("First name"))
-    last_name = forms.CharField(max_length=30, label=tr("Last name"))
+    first_name = forms.CharField(label=tr('First name'), max_length=30)
+    last_name = forms.CharField(label=tr('Last name'), max_length=150)
+
     # phone_regex = RegexValidator(regex=r"^\+(?:[0-9]●?){6,14}[0-9]$", message=tr("Enter a valid international mobile phone number starting with +(country code)"))
     # mobile_phone = forms.CharField(validators=[phone_regex], label=tr("Mobile phone"), max_length=17)
 
@@ -89,7 +90,6 @@ class SupplierSignupForm(SignupForm):
         user = super(SupplierSignupForm, self).save(request)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        # user.mobile_phone = self.cleaned_data['mobile_phone']
         user.is_supplier = True
         user.is_manager = False
         user.save()
@@ -117,11 +117,8 @@ class ManagerSignupForm(SignupForm):
     ## the OneToOneField to User
     ## (N.B: do NOT try to declare Meta class with model=SupplierUser,
     ## it won't work!) ex:
-
-    first_name = forms.CharField(max_length=30, label=tr("First name"))
-    last_name = forms.CharField(max_length=30, label=tr("Last name"))
-    # phone_regex = RegexValidator(regex=r"^\+(?:[0-9]●?){6,14}[0-9]$", message=tr("Enter a valid international mobile phone number starting with +(country code)"))
-    # mobile_phone = forms.CharField(validators=[phone_regex], label=tr("Mobile phone"), max_length=17)
+    first_name = forms.CharField(label=tr('First name'), max_length=30)
+    last_name = forms.CharField(label=tr('Last name'), max_length=150)
 
     def __init__(self, *args, **kwargs):
         SignupForm.__init__(self, *args, **kwargs)
@@ -134,10 +131,8 @@ class ManagerSignupForm(SignupForm):
     def save(self, request):
         ## Save the User instance and get a reference to it
         user = super(ManagerSignupForm, self).save(request)
-
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        # user.mobile_phone = self.cleaned_data['mobile_phone']
         user.is_supplier = False
         user.is_manager = True
         user.save()

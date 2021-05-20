@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container text-light" style="padding-top: 100px;">
+      <div class="pt-5 text-center">
+        <h2>{% if object.pk %}Update address "{{object.name}}"{% else %}Create a new Address{% endif %}</h2>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+        <form method="post">
+          {% csrf_token %}
+          <div class="row px-0">
+            <div class="col-md-6 mb-3 pl-0">
+              {% with field=form.first_name placeholder="First name" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="col-md-6 mb-3 pr-0">
+              {% with field=form.last_name placeholder="Last name"  field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+          </div>
+          <div class="mb-3">
+              {% with field=form.address1 placeholder="Address1" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+          </div>
+
+          <div class="mb-3">
+              {% with field=form.address2 placeholder="Address2" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-5 mb-3 pl-0">
+              {% with field=form.country placeholder="Country" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="col-md-4 mb-3">
+              {% with field=form.city placeholder="City" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="col-md-3 mb-3 pr-0">
+              {% with field=form.zip_code placeholder="Zip code" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-3 px-0">
+              {% with field=form.additional_information placeholder="Additional information" field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3 px-0">
+              {% with field=form.name field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="col-md-6 my-4 pl-5 pt-3 form-check">
+            {% with "form-check-input input-field-"|add:form.is_primary.name as field_class %}
+              <input type="checkbox" name="{{form.is_primary.name}}" id="check-is_primary" class="{{field_class}}">
+              <label class="form-check-label" for="check-is_primary">
+                  Set it as your default address?
+              </label>
+            {% endwith %}
+            </div>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-success btn-lg btn-block mb-5" type="submit" value="Save">Save address</button>
+        </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

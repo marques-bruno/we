@@ -1,28 +1,13 @@
-
-* {
-  border-radius: 0 !important;
-  font-family: 'Rosario', sans-serif;
-}
-
-
-body, html {
-  margin: 0px;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden;
-}
+/* hack to avoid overflow-hidden on html body, which causes js scroll feature to malfunction */
+.row { margin: 0; padding: 0 }
 
 /* slightly transparent fallback */
 @supports not (backdrop-filter: blur(10px)) {
   .btn-outline-success {
     background: rgba(60, 87, 16, 0.9) !important;
-    border-color: rgba(116, 143, 71, 1.0) !important;
-    color: white;
   }
   .btn-outline-success:hover {
     background: rgba(33, 51, 4, 0.9) !important;
-    border-color: rgba(116, 143, 71, 1.0) !important;
-    color: white;
   }
   .navbar {
     width: 100%;
@@ -61,8 +46,6 @@ body, html {
   background: rgba(116, 143, 71, 0.27);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-color: rgba(116, 143, 71, 1.0);
-  color: white;
 }
 
 .btn-outline-success:hover {
@@ -73,7 +56,7 @@ body, html {
   color: white; */
 }
 
-.nav-content {
+/* .nav-content {
   width: 700px;
   margin: 0 auto;
   padding: 5px;
@@ -84,9 +67,9 @@ body, html {
   line-height: 10px;
   font-weight: bold;
   font-size: 26px;
-}
+} */
 
-.content {
+/* .content {
   clear: both;
 }
 
@@ -94,37 +77,17 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-}
+} */
 
 .cta-input {
-  opacity: 0.9;
   min-height: 70px;
+  line-height: 2.0;
   font-size: x-large !important;
   -webkit-appearance: none;
 }
 
-.success,.btn-success{
-  background-color: #748F47 !important;
-  opacity: 1
-}
-
-.btn-success {
-  border: 1px solid transparent !important;
-}
-
-.btn-success:hover {
-  background-color: #324413 !important;
-  opacity: 1
-}
-
-
-select.text-center {
-  text-align-last:center;
-}
-
 .nav-link {
   font-size: 18px;
-  color: white !important;
 }
 
 .card-body {
@@ -133,9 +96,11 @@ select.text-center {
 }
 
 .card-text {
-  background-color: #e5e5e5 !important;
-  color: #748F47 !important;
   font-size: 16px;
+}
+
+.card-img {
+  object-fit: cover;
 }
 
 .card-overlay {
@@ -149,7 +114,7 @@ select.text-center {
     left: 0px;
     right: 0px;
     background-color: #DDD;
-    opacity: 0.7;
+    opacity: 1.0;
     color: black;
     font-size: 17px;
   }
@@ -166,4 +131,66 @@ select.text-center {
   -webkit-backdrop-filter: blur(10px);
   color: black;
   font-size: 17px;
+}
+
+/* Zoom effect on product images */
+
+/* [1] The container */
+.img-hover-zoom {
+  height: 300px; /* [1.1] Set it as per your need */
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img {
+  transition: transform .2s, visibility .2s ease-in;}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img {
+  transform: scale(1.5);
+}
+/* ----------------------------- */
+
+/* bloc replacements on hover */
+.bloc,
+.hovered_bloc {
+  text-align: center;
+}
+
+.bloc {
+  display: block;
+}
+
+.hovered_bloc {
+  display: none;
+}
+
+
+.bloc-wrapper:hover .bloc {
+  display: none !important;
+}
+
+.bloc-wrapper:hover .hovered_bloc {
+  display: block !important;
+}
+/* ----------------------------- */
+
+
+.bg-footer-top {
+  background-color: #677949;
+}
+
+.bg-footer-bottom {
+  background-color: #748F47;
+}
+
+.message-wrapper {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+}
+
+.rounded-circle {
+  width: 40px;
+  height: 40px;
 }

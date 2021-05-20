@@ -1,0 +1,53 @@
+{% extends 'userprofile/account/account_profile_base.html' %}
+{% load i18n static %}
+
+{% block tab_title %}
+    <h4>Account Information</h4>
+{% endblock tab_title %}
+
+{% block tab_content %}
+{% load i18n socialaccount %}
+
+    {% get_providers as socialaccount_providers %}
+
+    <form method="POST" action="{% url 'account_update' request.user.pk %}" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+            <div class= "form-group col-md-8" >
+                <div class= "form-group row-md-8" >
+                    <div class="form-row col-md-12">
+                        {% with field=form.username default=request.user.username readonly="readonly" %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                    <div class="form-row col-md-12 mt-4 mb-0">
+                        {% with field=form.email default=request.user.email readonly="readonly" %}{% include "account/form_field.html" %}{% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class= "col-md-4 border">
+                <img src="{{ request.user.picture.url}}" class="profile-image" alt="{% trans "User's profile Picture" %}" style='width: 100%; height: auto;'>
+                <div class="form-group mb-0">
+                    {% with field=form.picture default=request.user.picture %}{% include "account/form_field.html" %}{% endwith %}
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="form-row col-md-4 ml-2">
+                {% with field=form.first_name default=request.user.first_name %}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="form-row col-md-4 mx-1">
+                {% with field=form.last_name default=request.user.last_name %}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+            <div class="form-row col-md-3">
+                {% with field=form.birthdate default=request.user.birthdate %}{% include "account/form_field.html" %}{% endwith %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary ml-2">{% trans "Update" %}</button>
+    </form>
+    <br>
+    {% if socialaccount_providers %}
+        <br>
+        <p>{% blocktrans with site.name as site_name %}Connect your existing account to one of your social accounts:{% endblocktrans %}</p>
+        {% include "socialaccount/provider_list.html" with process="connect" %}
+    {% endif %}
+
+{% endblock tab_content %}

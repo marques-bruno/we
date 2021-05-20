@@ -1,6 +1,7 @@
 {% extends 'userauth/account/base_card.html' %}
 
 {% load i18n static menu_tags %}
+{% load i18n static string_tags %}
 
 
 {% block title %}{% trans "Your Account" %}{% endblock title %}
@@ -10,14 +11,20 @@
 {% endblock card-header %}
 
 {% block card-body %}
-    {% get_menu "customerprofile" as menuitems %}
+    {% if request.user.is_supplier %}
+        {% get_menu "supplierprofile" as menuitems %}
+    {% elif request.user.is_manager %}
+        {% get_menu "managerprofile" as menuitems %}
+    {% else %}
+        {% get_menu "customerprofile" as menuitems %}
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 ">
                 <div class="list-group ">
                 {% for item in menuitems.menu_items.all %}
-                    <a href="{{ item.item_page.url }}" class="list-group-item list-group-item-action {% if item.item_page.slug == tab %}active{% endif %}">
-                        {{item.item_page.title}}
+                    <a href="{% url item.url request.user.pk%}" class="list-group-item list-group-item-action {% if var == request.path %}active{% endif %}">
+                        {{item.title}}
                     </a>
                 {% endfor %}
                 </div> 

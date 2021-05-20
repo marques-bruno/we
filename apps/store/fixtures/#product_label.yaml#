@@ -1,0 +1,36 @@
+- model: store.productlabel
+  pk: 1
+  fields:
+    ref_name: 'bio'
+    name: 'Bio' 
+    icon: '/static/icon_bio.png' 
+- model: store.productlabel
+  pk: 2
+  fields:
+    ref_name: 'gluten_free'
+    name: 'Gluten-Free' 
+    icon: '/static/icon_nogluten.png' 
+- model: store.productlabel
+  pk: 4
+  fields:
+    ref_name: 'vegan'
+    name: 'Vegan' 
+    icon: '/static/icon_vegan.png' 
+- model: store.productlabel
+  pk: 5
+  fields:
+    ref_name: 'vegetarian'
+    name: 'Vegetarian' 
+    icon: '/static/icon_vegetarian.png' 
+- model: store.productlabel
+  pk: 6
+  fields:
+    ref_name: 'free_range'
+    name: 'Free-Range' 
+    icon: '/static/icon_free_range.png' 
+- model: store.productlabel
+  pk: 7
+  fields:
+    ref_name: 'plastic_free'
+    name: 'Plastic-Free' 
+    icon: '/static/icon_plastic_free.png' 

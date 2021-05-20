@@ -11,8 +11,8 @@
 
 {% block content %}
 <div class="container-fluid m-0 p-0">
-  {% for block in page.body %}
-    {% include_block block %}
+  {% for section in page.sections %}
+    {% include_block section %}
   {% endfor %}
 </div>
 {% endblock content %}
