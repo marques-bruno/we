@@ -73,9 +73,7 @@ INSTALLED_APPS = [
     'store',
     'sales_pipeline',
     'streams',
-    'frontend',
 
-    'wagtailuiplus',
     'crispy_forms',
 
     # rest API stuff:

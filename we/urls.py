@@ -41,7 +41,6 @@ urlpatterns = urlpatterns + [
     path('', include('userauth.urls')),
     path('', include('userprofile.urls')),
     path('', include('allauth.urls')),
-    path('', include('frontend.urls')),
 
     path('api/v2/', api_router.urls),
 
