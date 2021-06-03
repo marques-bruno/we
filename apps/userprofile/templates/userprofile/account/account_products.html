@@ -1,0 +1,86 @@
+{% extends 'userprofile/account/account_profile_base.html' %}
+
+{% load i18n static thumbnail %}
+
+{% block page_content %}
+<div class="background-container m-0 p-0 vh-100">
+
+    <div class="mx-5 px-5">
+        <h4 class="px-5">My Products</h4>
+        <div class="px-3 table-bg">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Labels</th>
+                        <th style="width: 5%;">In Stock</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        {% thumbnail product.image "150x75" crop="center" as im %}
+                        <th class="p-0" style="width: 1%;"><img src="{{im.url}}" alt="{{product.image.alt}}"></th>
+                        {% endthumbnail %}
+                        <td>{{ product.name }}</td>
+                        <td style="width: 1%;">{{ product.category }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.allergens }}</td>
+                        <td>{{product.quantity}}</td>
+                        <td style="width: 1%;"><button onclick="edit('honey')" class="btn btn-primary">Edit</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="p-4 table-bg">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">«</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">»</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal HTML -->
+<div id="edit-modal" class="modal fade" tabindex="-1">
+
+    <div class="modal-dialog modal-fullscreen mt-5">
+        <div id="profile_content" class="modal-content" style="background-color: transparent">
+            {% include './products/edit-product.html' %}
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
+
+{% block javascript %}
+<script>
+    function edit(item_id) {
+        $("#edit-modal").modal('show');
+    };
+</script>
+{% endblock javascript %}

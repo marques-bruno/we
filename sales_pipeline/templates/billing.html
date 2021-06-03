@@ -1,65 +1,65 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'sales-pipeline.html' %}
+{% block page_content %}
 
-    <div class="container text-light" style="padding-top: 100px;">
-      <div class="pt-5 text-center">
-        <h2>Choose your billing address</h2>
-      </div>
-          <form method="POST">
-            {% csrf_token %}
-            <div class="row px-0">
-              <div class="col-md-6 mb-3 pl-0">
-                  {% with field=form.address field_class="form-control" %}{% include "account/form_field.html" %}{% endwith %}
-                  <a href="{% url 'sales_pipeline:address' %}" class="btn btn-outline-success btn-lg btn-block my-3">Create a new Address</a>
-                  {% if addrs.all|first %}
-                    <h4>Your billing address:</h4>
-                    {% with addrs.all|first as addr %}
-                    <table class="table table-dark">
-                      <thead>
-                        <tr>
-                          <th scope="col" id="addr-name">N/A</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td id="addr-first_name">N/A</td>
-                        </tr>
-                        <tr>
-                          <td id="addr-address">N/A</td>
-                        </tr>
-                        <tr>
-                          <td id="addr-zip_city">N/A</td>
-                        <tr>
-                          <td id="addr-country">N/A</td>
-                        </tr>
-                        <tr>
-                          <td id="addr-phone">Phone: N/A</td>
-                        </tr>
-                        <tr>
-                          <td id="addr-mobile">Mobile: N/A</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div id="demo"></div>
-                    <button class="btn btn-outline-success btn-sm btn-block mb-5" type="submit" name="submit" value="update_addr">Update this address</button>
-                    {% endwith %}
-                  {% endif %}
-              </div>
-              <div class="col-md-6 mb-3 pr-0">
-                  <img src="../media/skultetyho_map.png" width="622" height="450" alt="a google map embed here" class="mb-4"/>
-                  {% with field=form.customer_message field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
-              </div>
-            </div>
-            <hr class="mb-4">
-            <button class="btn btn-success btn-lg btn-block mb-5" type="submit" name="submit" value="to_checkout">Continue to checkout</button>
-          </form>
+  <div class="row text-light">
+    <div class="pt-5 text-center">
+      <h2>Choose your billing address</h2>
     </div>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="row px-0">
+        <div class="col-md-6 mb-3 pl-0">
+            {% with field=form.address field_class="form-control" %}{% include "account/form_field.html" %}{% endwith %}
+            <a href="{% url 'sales_pipeline:address' %}" class="btn btn-outline-success btn-lg btn-block my-3">Create a new Address</a>
+            {% if addrs.all|first %}
+              <h4>Your billing address:</h4>
+              {% with addrs.all|first as addr %}
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col" id="addr-name">N/A</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="addr-first_name">N/A</td>
+                  </tr>
+                  <tr>
+                    <td id="addr-address">N/A</td>
+                  </tr>
+                  <tr>
+                    <td id="addr-zip_city">N/A</td>
+                  <tr>
+                    <td id="addr-country">N/A</td>
+                  </tr>
+                  <tr>
+                    <td id="addr-phone">Phone: N/A</td>
+                  </tr>
+                  <tr>
+                    <td id="addr-mobile">Mobile: N/A</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="demo"></div>
+              <button class="btn btn-outline-success btn-sm btn-block mb-5" type="submit" name="submit" value="update_addr">Update this address</button>
+              {% endwith %}
+            {% endif %}
+        </div>
+        <div class="col-md-6 mb-3 pr-0">
+            <img src="../media/skultetyho_map.png" width="622" height="450" alt="a google map embed here" class="mb-4"/>
+            {% with field=form.customer_message field_class="form-control"%}{% include "account/form_field.html" %}{% endwith %}
+        </div>
+      </div>
+      <hr class="mb-4">
+      <button class="btn btn-success btn-lg btn-block mb-5" type="submit" name="submit" value="to_checkout">Continue to checkout</button>
+    </form>
+  </div>
 
-{% endblock content %}
+{% endblock page_content %}
 
 
 {% block javascript %}
-<script>
+{% comment %} <script>
   function updateAddr(e) {
     e.preventDefault();
     var addresses = {{json_addrs|safe}};
@@ -96,8 +96,7 @@
       }
     }
   })
-  {% comment %} $("#id_address").on("load", function(e){ updateAddr(e); }); {% endcomment %}
   $("#id_address").on("change", function(e){ updateAddr(e); });
 
-</script>
+</script> {% endcomment %}
 {% endblock javascript %}

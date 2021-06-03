@@ -92,3 +92,12 @@ class BillingView(FormView):
             return redirect('/')
 
 billing_view = login_required(BillingView.as_view())
+
+
+class PaymentView(View):
+    template_name = 'payment.html'
+
+    def get(self, *args, **kwargs):
+            return render(self.request, self.template_name)
+
+payment_view = login_required(PaymentView.as_view())

@@ -1,0 +1,82 @@
+<div class="mb-3">
+    <label class="control-label">Quantity in stock:</label>
+    <div class="input-group">
+        <input type="number" min="1" class="form-control my-2">
+
+        <div class="input-group-append" style="width:15%;">
+            <select class="form-select my-2 btn btn-success" aria-label="Stock type:">
+                <option value="0" selected>kg</option>
+                <option value="1">g</option>
+                <option value="2">L</option>
+                <option value="3">cl</option>
+            </select>
+        </div>
+    </div>
+    <small class="form-text text-muted">Provide the quantity of this product that you have in stock. If you have different quantities in stock for different packagings, you will have to create (separately) two distinct products.</small>
+</div>
+<label>Pricing options:</label>
+<div id="entry-table" class="table-bg p-2">
+    <table class="table">
+        <thead>
+            <th></th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </thead>
+        <tbody id="table-body">
+            <tr id="pricing-line[0]">
+                <th><button type="button" class='btn' style='display:none;'><i class='fas fa-trash mr-2' style='color: #748F47;'></i></button></th>
+                <td>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="quantity[0]">
+                        <div class="input-group-append">
+                            <div class="form-control bg-primary">kg</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="price[0]">
+                        <div class="input-group-append">
+                            <div class="form-control bg-primary">€</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="add_pricing_line()">Add degressive price</button>
+</div>
+
+<script>
+    var counter = 1;
+
+    function add_pricing_line() {
+        var line = document.getElementById('pricing-line[0]').cloneNode(true);
+        line.setAttribute('id', 'pricing-line[' + counter.toString() + ']');
+
+        elements = line.getElementsByTagName("input");
+        for (i = 0; i < elements.length; i++) {
+            element = elements.item(i);
+            s = null;
+            s = element.getAttribute("name");
+            if (s == null)
+                continue;
+            t = s.split("[");
+            if (t.length < 2)
+                continue;
+            s = t[0] + "[" + counter.toString() + "]";
+            element.setAttribute("name", s);
+            element.value = "";
+        }
+        var btn = line.getElementsByTagName("button")[0]
+        btn.style.display = "block";
+        btn.setAttribute("onclick", "remove_line("+ counter +")");
+        document.getElementById('pricing-line[0]').parentNode.appendChild(line);
+
+        counter++;
+    }
+
+    function remove_line(entry) {
+        document.getElementById("pricing-line["+ entry +"]").remove();
+    }
+</script>

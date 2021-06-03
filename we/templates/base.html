@@ -39,7 +39,7 @@
     {% block header %}
         {% wagtailuserbar %}
         {% image settings.home.SiteSettings.logo fill-100x100 as logo %}
-        <nav class="navbar navbar-expand-md navbar-dark sticky-top navbar-fixed-top">
+        <nav id="main_navbar" class="navbar navbar-expand-md navbar-dark sticky-top navbar-fixed-top">
             <a class="position-sticky mt-4" href="/"><img src="{{logo.url}}" alt="{{logo.alt}}"></a>
             <div class="container-fluid">    
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">

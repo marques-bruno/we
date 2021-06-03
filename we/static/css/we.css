@@ -9,7 +9,7 @@
   .btn-outline-success:hover {
     background: rgba(33, 51, 4, 0.9) !important;
   }
-  .navbar {
+  #main_navbar {
     width: 100%;
     height: 70px;
     position: fixed;
@@ -33,7 +33,7 @@
   transition: background-color 500ms linear;
 }
 
-.navbar {
+#main_navbar {
     width: 100%;
     height: 70px;
     background: rgba(116, 143, 71, 0.27);
@@ -81,7 +81,6 @@
 
 .cta-input {
   min-height: 70px;
-  line-height: 2.0;
   font-size: x-large !important;
   -webkit-appearance: none;
 }
@@ -193,4 +192,53 @@
 .rounded-circle {
   width: 40px;
   height: 40px;
+}
+
+
+/* ---------------- MODAL BLUR ---------------*/
+.modal-open .background-container{
+  -webkit-filter: blur(30px);
+  -moz-filter: blur(30px);
+  -o-filter: blur(30px);
+  -ms-filter: blur(30px);
+  filter: blur(30px);
+  filter: url("https://gist.githubusercontent.com/amitabhaghosh197/b7865b409e835b5a43b5/raw/1a255b551091924971e7dee8935fd38a7fdf7311/blur".svg#blur);
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='30');
+}
+
+
+
+/* Test whipping into shape the file inputs*/
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button.hide-spinner, input::-webkit-inner-spin-button.hide-spinner{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number].hide-spinner {
+  -moz-appearance: textfield;
 }

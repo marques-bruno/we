@@ -1,12 +1,11 @@
 {% load wagtailcore_tags wagtailimages_tags%}
 
 {% image self.bg_image fill-1600x800 as img%}
-<div class="row vh-100 align-items-center" id="section" style="background-image: url({{ img.url }})">
-    <div class="container">
-        <form action="to_selected_pickup" method="POST">
-        <div class="row justify-content-md-center">
-            <div class="custom-select p-0">    
-                <select class="form-control text-center cta-input" id="inputGroupSelect04">
+<div class="row vh-100 align-items-center" style="background-image: url({{ img.url }}); background-size: cover;">
+    <div class="container-fluid">
+        <form class="input-group justify-content-center" action="to_selected_pickup" method="POST">
+            <div class="custom-select">
+                <select class="form-control text-center cta-input my-auto"  aria-label="pickup select" aria-describedby="pickup-addon">
                     <option class="cta-input" selected hidden>{{self.title}}</option>
                     {% if pickup_points|length %}
                         {% for pickup in pickup_points %}
@@ -18,9 +17,8 @@
                 </select>
             </div>
             <div class="input-group-append">
-                <button class="btn btn-success cta-input" type="submit">{{self.button_text}}</button>
+                <button class="btn btn-primary cta-input my-auto" type="submit">{{self.button_text}}</button>
             </div>
-        </div>
         </form>
         <div class="text-center m-4">
             <button class="btn btn-outline-success cta-input" type="submit"><i class="fa fa-search"></i> <u>{{self.text}}</u></button>

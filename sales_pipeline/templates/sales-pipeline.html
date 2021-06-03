@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row w-100 mx-5" style="padding-top: 100px;">
+        <ol class="breadcrumb p-3">
+        {% if request.path == "/order-summary/" %}
+            <li class="breadcrumb-item active"><span>1. Summary</span></li>
+        {% else %}
+            <li class="breadcrumb-item">1. <a href="{% url 'store:order_summary' %}">Summary</a></li>
+        {% endif %}
+
+        {% if request.path == "/billing/" %}
+            <li class="breadcrumb-item active"><span>2. Billing</span></li>
+        {% else %}
+            <li class="breadcrumb-item">2. <a href="{% url 'sales_pipeline:billing' %}">Billing</a></li>
+        {% endif %}
+
+        {% if request.path == "/payment/" %}
+            <li class="breadcrumb-item active"><span>3. Payment</span></li>
+        {% else %}
+            <li class="breadcrumb-item">3. <a href="{% url 'sales_pipeline:payment' %}">Payment</a></li>
+        {% endif %}
+        </ol>
+    {% block page_content %}{% endblock page_content %}
+    </div>
+{% endblock content %}

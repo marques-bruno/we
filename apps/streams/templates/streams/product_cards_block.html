@@ -8,14 +8,14 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-sm-12">
-                <div class="row justify-content-center">
+                <div class="row">
                     {% for product in products %}
                     <div class="col-lg-4 col-sm-12 card-deck mb-5">
                         {% include "product_card.html" %}
                     </div>
                     {% endfor %}
                 </div>
-                <div class="row justify-content-center ">
+                <div class="row">
                     <a href="{{self.btn_url}}" class="btn btn-success cta-input">{{self.btn_text}}</a>
                 </div>
             </div>

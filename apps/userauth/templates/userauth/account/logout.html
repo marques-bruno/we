@@ -10,7 +10,7 @@
 
 {% block card-body %}
 
-    <p>{% trans "Are you sure you want to log out?" %}</p>
+    <p class="card-text">{% trans "Are you sure you want to log out?" %}</p>
     
     <form method="POST" action="{% url 'account_logout' %}">
         {% csrf_token %}

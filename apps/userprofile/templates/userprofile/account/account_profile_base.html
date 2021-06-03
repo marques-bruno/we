@@ -1,51 +1,25 @@
-{% extends 'userauth/account/base_card.html' %}
+{% extends 'userauth/account/base_profile_view.html' %}
 
 {% load i18n static menu_tags %}
 {% load i18n static string_tags %}
 
-
-{% block title %}{% trans "Your Account" %}{% endblock title %}
-
-{% block card-header %}
-    <h3>{% trans "Your Account" %}</h3>
-{% endblock card-header %}
-
-{% block card-body %}
+{% block profile_menus %}
     {% if request.user.is_supplier %}
         {% get_menu "supplierprofile" as menuitems %}
+
     {% elif request.user.is_manager %}
         {% get_menu "managerprofile" as menuitems %}
     {% else %}
         {% get_menu "customerprofile" as menuitems %}
     {% endif %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 ">
-                <div class="list-group ">
-                {% for item in menuitems.menu_items.all %}
-                    <a href="{% url item.url request.user.pk%}" class="list-group-item list-group-item-action {% if var == request.path %}active{% endif %}">
-                        {{item.title}}
-                    </a>
-                {% endfor %}
-                </div> 
-            </div>
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                {% block tab_title %}{% endblock %}
-                                <hr>
-                            </div>
-                        </div>
-                        {% block tab_content %}{% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock card-body %}
+    {% for item in menuitems.menu_items.all %}
+            <a class="border-1 list-group-item list-group-item-action {% if request.resolver_match.url_name == item.url %}active{% endif %}"
+             href="{% url item.url request.user.pk %}">
+                {{item.title}}
+            </a>
+    {% endfor %}
+{% endblock profile_menus %}
 
-{% block card-footer %}
-    <a href="{% url 'account_delete' request.user.pk %}">{% trans "Delete your account" %}</a>
-{% endblock card-footer %}
+{% block javascript %}
+    {# Override this in templates to add extra javascript #}
+{% endblock javascript %}

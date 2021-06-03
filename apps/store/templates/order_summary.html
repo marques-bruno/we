@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'sales-pipeline.html' %}
 {% load static wagtailcore_tags%}
 
 
-{% block content %}
-<div class="row w-100 pt-5">
-    <div class="container pt-5">
-      <div class="col-md-12 text-light p-5">
+{% block page_content %}
+<div class="row w-100">
+    <div class="container">
+      <div class="col-md-12 text-light">
         <h2 class="pt-5">Order Summary</h2>
         <table class="table table-dark">
           <thead>
@@ -72,4 +72,4 @@
       </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock page_content %}
