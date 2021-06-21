@@ -1,3 +1,4 @@
+from .forms import ProductForm
 from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -5,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.views.generic import View, DetailView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+# from rest_framework import serializers
+# from rest_framework.serializers import Serializer
 from .store_models import (
     Order,
     OrderItem,
@@ -19,7 +22,7 @@ from .store_models import (
 
 #######################REST_API#########################
 
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 from .serializers import (
     OrderSerializer,
     OrderItemSerializer,
@@ -32,37 +35,46 @@ from .serializers import (
     PickupPointSerializer
 )
 
+
 class OrderView(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+
 
 class OrderItemView(viewsets.ModelViewSet):
     serializer_class = OrderItemSerializer
     queryset = OrderItem.objects.all()
 
+
 class OrderStatusView(viewsets.ModelViewSet):
     serializer_class = OrderStatusSerializer
     queryset = OrderStatus.objects.all()
+
 
 class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
+
 class ProductAllergenView(viewsets.ModelViewSet):
     serializer_class = ProductAllergenSerializer
     queryset = ProductAllergen.objects.all()
+
 
 class ProductLabelView(viewsets.ModelViewSet):
     serializer_class = ProductLabelSerializer
     queryset = ProductLabel.objects.all()
 
+
 class ProductTypeView(viewsets.ModelViewSet):
     serializer_class = ProductTypeSerializer
     queryset = ProductType.objects.all()
 
+
 class ProductUnitView(viewsets.ModelViewSet):
     serializer_class = ProductUnitSerializer
     queryset = ProductUnit.objects.all()
+
 
 class PickupPointView(viewsets.ModelViewSet):
     serializer_class = PickupPointSerializer
@@ -81,6 +93,7 @@ def product_list_view(request):
 class ProductDetailView(DetailView):
     model = Product
     template_name = "product_detail.html"
+
 
 product_detail_view = ProductDetailView.as_view()
 
@@ -104,17 +117,21 @@ def ajax_add_to_cart(request):
             n_items = OrderItem.objects.filter(order=order).count()
         else:
             # order_item = OrderItem.objects.create(product=item, order=order, quantity=request.quantity)
-            order_item = OrderItem.objects.create(product=item, order=order, quantity=1)
+            order_item = OrderItem.objects.create(
+                product=item, order=order, quantity=1)
             order_item.save()
-            messages.info(request, item.name + 'x' + str(order_item.quantity) + ' has been added to your cart')
+            messages.info(request, item.name + 'x' +
+                          str(order_item.quantity) + ' has been added to your cart')
             n_items = OrderItem.objects.filter(order=order).count()
     else:
         order = Order.objects.create(user=request.user)
         order.save()
         # order_item = OrderItem.objects.create(product=item, order=order, quantity=request.quantity)
-        order_item = OrderItem.objects.create(product=item, order=order, quantity=1)
+        order_item = OrderItem.objects.create(
+            product=item, order=order, quantity=1)
         order_item.save()
-        messages.info(request, item.name + 'x' + str(order_item.quantity) + ' has been added to your cart')
+        messages.info(request, item.name + 'x' +
+                      str(order_item.quantity) + ' has been added to your cart')
     django_messages = []
     for message in messages.get_messages(request):
         django_messages.append({
@@ -127,7 +144,7 @@ def ajax_add_to_cart(request):
 
 @login_required
 def ajax_increase_item_from_cart(request):
-    slug = request.GET.get('slug', None);
+    slug = request.GET.get('slug', None)
     item = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, complete=False)
     if order_qs.exists():
@@ -149,9 +166,10 @@ def ajax_increase_item_from_cart(request):
             return JsonResponse({'n_items': order_items.count(), 'new_qtty': existing_order_item.quantity, 'messages': django_messages}, status=200)
     return JsonResponse({'error': 'An error occurred. please refresh the page'}, status=400)
 
+
 @login_required
 def ajax_decrease_item_from_cart(request):
-    slug = request.GET.get('slug', None);
+    slug = request.GET.get('slug', None)
     item = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, complete=False)
     if order_qs.exists():
@@ -177,7 +195,7 @@ def ajax_decrease_item_from_cart(request):
 
 @login_required
 def ajax_remove_item_from_cart(request):
-    slug = request.GET.get('slug', None);
+    slug = request.GET.get('slug', None)
     item = get_object_or_404(Product, slug=slug)
     order_qs = Order.objects.filter(user=request.user, complete=False)
     django_messages = []
@@ -210,10 +228,56 @@ class OrderSummaryView(View):
 
         try:
             order = Order.objects.get(user=self.request.user, complete=False)
-            ctx = {'order': order }
+            ctx = {'order': order}
             return render(self.request, "order_summary.html", ctx)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You haven't added any product in your basket yet")
+            messages.error(
+                self.request, "You haven't added any product in your basket yet")
             return redirect('/')
 
+
 order_summary_view = login_required(OrderSummaryView.as_view())
+
+
+@login_required
+def ajax_get_product_info(request):
+    slug = request.GET.get('slug', None)
+    item = get_object_or_404(Product, slug=slug)
+    #form = ProductForm()
+
+    item_serializer = ProductSerializer(item)
+    allergens = ProductAllergenSerializer(
+        ProductAllergen.objects.all(), many=True)
+    labels = ProductLabelSerializer(ProductLabel.objects.all(), many=True)
+    types = ProductTypeSerializer(ProductType.objects.all(), many=True)
+
+    data = {'item': item_serializer.data, 'all_allergens': allergens.data,
+            'all_labels': labels.data, 'all_types': types.data}
+    return JsonResponse(data, status=200)
+
+
+@login_required
+def ajax_set_product_info(request):
+    print("MF")
+   # request should be ajax and method should be POST.
+    if request.is_ajax and request.method == "POST":
+        # get the form data
+        print(request.POST)
+        form = ProductForm(request.POST)
+        # save the data and after fetch the object in instance
+
+        ## Here it should be necessary to add product supplier (request.user)
+
+        if form.is_valid():
+            instance = form.save()
+            # serialize in new friend object in json
+            ser_instance = serializers.serialize('json', [instance, ])
+            # send to client side.
+            return JsonResponse({"instance": ser_instance}, status=200)
+        else:
+            # some form errors occured.
+            return JsonResponse({"error": form.errors}, status=400)
+
+    # some error occured
+    return JsonResponse({"error": ""}, status=400)
+

@@ -23,15 +23,15 @@
                 <tbody>
                     {% for product in products %}
                     <tr>
-                        {% thumbnail product.image "150x75" crop="center" as im %}
+                        {% thumbnail product.image "150x100" crop="center" as im %}
                         <th class="p-0" style="width: 1%;"><img src="{{im.url}}" alt="{{product.image.alt}}"></th>
                         {% endthumbnail %}
                         <td>{{ product.name }}</td>
                         <td style="width: 1%;">{{ product.category }}</td>
-                        <td>{{ product.description }}</td>
+                        <td>{{ product.description | safe }}</td>
                         <td>{{ product.allergens }}</td>
                         <td>{{product.quantity}}</td>
-                        <td style="width: 1%;"><button onclick="edit('honey')" class="btn btn-primary">Edit</button>
+                        <td style="width: 1%;"><button onclick="edit('{{ product.slug }}')" class="btn btn-primary">Edit</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -79,8 +79,130 @@
 
 {% block javascript %}
 <script>
+
+    function isChecked(checked_indices, id) {
+        for (var j = 0 ; j < checked_indices.length ; ++j) {
+            if (checked_indices[j] === id)
+                return true;
+        }
+        return false;
+    }
+
+    function fillLabels(response) {
+        var str = "<h5>Labels:</h5>"
+        for (var i = 0 ; i < response['all_labels'].length ; ++i)
+        {
+            var lbl = response['all_labels'][i]
+            var checked = isChecked(response['item']['labels'], lbl['id']);
+            str += "<div class='col-6'>\n\
+                <div class='form-check'>\n\
+                    <input class='form-check-input' type='checkbox' "+ (checked?"checked":"unchecked") +" name='"+ lbl['id'] +"' id='label" + lbl['id'] + "'>\n\
+                    <label class='form-check-label' for='label" + lbl['id'] + "'>" + lbl['name'] + "</label>\n\
+                </div>\n</div>";
+        }
+        document.querySelector("#labels_block").innerHTML = str;
+    }
+
+    function fillAllergens(response) {
+        var str = "<h5>Allergens:</h5>"
+        for (var i = 0 ; i < response['all_allergens'].length ; ++i)
+        {
+            var lbl = response['all_allergens'][i]
+            var checked = isChecked(response['item']['allergens'], lbl['id']);
+            str += "<div class='form-check'>\n\
+                <input class='form-check-input' type='checkbox' "+ (checked?"checked":"unchecked") +" name='"+ lbl['id'] +"' id='allergen" + lbl['id'] + "'>\n\
+                <label class='form-check-label' for='allergen" + lbl['id'] + "'>" + lbl['name'] + "</label>\n\
+            </div>";
+        }
+        document.querySelector("#allergens_block").innerHTML = str;
+    }
+
+    function fillTypes(response) {
+        str = "<label for='item_type' class='form-label'>Select a category:</label>\n\
+                <select class='form-select' id='item_type' name='type'>"
+
+        for (var i = 0 ; i < response['all_types'].length ; ++i)
+        {
+            var lbl = response['all_types'][i]
+            var selected = (response['item']['type'] === lbl['id']);
+
+            str += "<option value='" + lbl['id'] + "' " + (selected?'selected':'') +">"+ lbl['name'] +"</option>";
+        }
+        str += "</select>"
+        document.querySelector("#item_type").innerHTML = str;
+    }
+
+
     function edit(item_id) {
+        $.ajax({
+            url: "{% url 'store:get_product_info' %}",
+            dataType: "json",
+            data: { slug: item_id},
+            success: function (response) {
+                document.getElementById("item_title").value = response['item']['name']
+                document.getElementById("item_description").value = response['item']['description']
+                document.getElementById("item_farmersadvice").value = response['item']['farmers_advice']
+
+                fillLabels(response);
+                fillAllergens(response);
+                fillTypes(response);
+            },
+            error: function (response) {
+                console.log('naaaay')
+            }
+        });
+
+
         $("#edit-modal").modal('show');
-    };
+    }
+
+
+    function cancel() {
+        console.log("cancel")
+    }
+
+    function preview() {
+        console.log("preview")
+        $("#product-form").submit()
+        console.log("AJAX done")
+    }
+
+    function close() {
+        console.log("close")
+    }
+
+    function create_new() {
+        console.log("create new")
+    }
+
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#product-form").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        console.log("SerializedData:\n" + serializedData)
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'store:set_product_info' %}",
+            dataType: "json",
+            data: { form: serializedData },
+            success: function (response) {
+                console.log("yaaay!!!")
+            },
+            error: function (response) {
+                console.log("naaay...")
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+
+        })
+    })
 </script>
+
 {% endblock javascript %}

@@ -1,3 +1,4 @@
+from store.forms import ProductForm
 from userauth.models import User, SupplierUser
 
 from django.shortcuts import render
