@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'store',
     'sales_pipeline',
     'streams',
+    'test_app',
 
     'crispy_forms',
 
@@ -82,6 +83,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -258,11 +258,10 @@ def ajax_get_product_info(request):
 
 @login_required
 def ajax_set_product_info(request):
-    print("MF")
    # request should be ajax and method should be POST.
     if request.is_ajax and request.method == "POST":
         # get the form data
-        print(request.POST)
+        print("Do we even get to this point?" + str(request.POST))
         form = ProductForm(request.POST)
         # save the data and after fetch the object in instance
 

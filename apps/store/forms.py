@@ -16,5 +16,9 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = ('__all__')
-        widgets = {'birthdate': forms.DateInput(attrs={'type':'date'})}
-
+        widgets = {'birthdate': forms.DateInput(attrs={'type':'date'}),
+                   'labels': forms.CheckboxSelectMultiple,
+                   'allergens': forms.CheckboxSelectMultiple,
+                   'description': forms.Textarea(attrs={"rows":5, "cols":50}),
+                   'farmers_advice': forms.Textarea(attrs={"rows":5, "cols":50}),
+                   }

@@ -156,24 +156,17 @@
         $("#edit-modal").modal('show');
     }
 
+    /*
+    JS code for the browse button todo(@bmarques): 
+    move button snippet into its own html file
+    */
+    const actualBtn = document.getElementById('actual-btn');
+    const fileChosen = document.getElementById('file-chosen');
 
-    function cancel() {
-        console.log("cancel")
-    }
+    actualBtn.addEventListener('change', function () {
+        fileChosen.value = this.files[0].name
+    })
 
-    function preview() {
-        console.log("preview")
-        $("#product-form").submit()
-        console.log("AJAX done")
-    }
-
-    function close() {
-        console.log("close")
-    }
-
-    function create_new() {
-        console.log("create new")
-    }
 
     /*
         On submiting the form, send the POST ajax
@@ -204,5 +197,4 @@
         })
     })
 </script>
-
 {% endblock javascript %}

@@ -50,8 +50,10 @@ def account_sales_view(request, pk=0):
 
 @login_required
 def account_products_view(request, pk=0):
+    supplier = SupplierUser.objects.filter(user=request.user)[0]
     context = {
-        'products': Product.objects.filter(supplier=SupplierUser.objects.filter(user=request.user)[0])
+        'form': ProductForm(initial={'supplier': supplier}),
+        'products': Product.objects.filter(supplier=supplier)
     }
     return render(request, 'userprofile/account/account_products.html', context)
 

@@ -45,8 +45,9 @@ urlpatterns = [
     path('ajax/increase-item/', ajax_increase_item_from_cart, name="increase_item"),
     path('ajax/decrease-item/', ajax_decrease_item_from_cart, name="decrease_item"),
     
-    path('ajax/get-product-info/', ajax_get_product_info, name="get_product_info"),
-    path('ajax/set-product-info/', ajax_set_product_info, name="set_product_info"),
     path('order-summary/', order_summary_view, name="order_summary"),
     path('api/store/', include(router.urls)),
+
+    path('get/ajax/get-product-info/', ajax_get_product_info, name="get_product_info"),
+    path('post/ajax/set-product-info/', ajax_set_product_info, name="set_product_info"),
 ]

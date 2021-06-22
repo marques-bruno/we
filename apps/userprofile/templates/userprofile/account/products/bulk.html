@@ -58,9 +58,24 @@
         for (i = 0; i < elements.length; i++) {
             element = elements.item(i);
             s = null;
-            s = element.getAttribute("name");
-            if (s == null)
-                continue;
+            s = element.getAttribute(
+<!-- JS code to load allergens list -->
+<script>
+    function get_product_info(item_slug) {
+        $.ajax({
+            url: "{% url 'store:get_product_info' %}",
+            dataType: "json",
+            data: { slug: item_slug},
+            success: function (response) {
+
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+</script>
+
             t = s.split("[");
             if (t.length < 2)
                 continue;
